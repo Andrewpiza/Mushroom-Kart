@@ -9,8 +9,10 @@ public class Racer : MonoBehaviour
     [SerializeField] private float acceleration = 1500;
     [SerializeField] private float maxSpeed = 15;
 
+    [SerializeField] private bool isDrifting;
 
     private Rigidbody2D rb;
+    private float driftAngle;
 
     void Start()
     {
@@ -21,13 +23,30 @@ public class Racer : MonoBehaviour
     {
         float xMove = Input.GetAxisRaw("Horizontal");
         float yMove = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKey(KeyCode.LeftShift)) {
+
+            isDrifting = true;
+        } 
+        else
+        {
+            isDrifting = false;
+        }
         
         Move(new Vector2(xMove, yMove));
     }
 
     public void Move(Vector2 move)
     {
-        rb.AddForce(move * acceleration * Time.deltaTime);
+        float newAcceleration = acceleration;
+
+        if (isDrifting)
+        {
+            newAcceleration *= 1.5f;
+            
+        } 
+
+        rb.AddForce(move * newAcceleration * Time.deltaTime);
 
         if (rb.velocity.magnitude > maxSpeed)
         {
