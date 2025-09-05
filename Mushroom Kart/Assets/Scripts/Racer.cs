@@ -17,10 +17,11 @@ public class Racer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
         float yMove = Input.GetAxisRaw("Vertical");
+        
         Move(new Vector2(xMove, yMove));
     }
 
