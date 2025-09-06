@@ -24,13 +24,19 @@ public class Racer : MonoBehaviour
         float xMove = Input.GetAxisRaw("Horizontal");
         float yMove = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
-
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (driftAngle == 0)
+            {
+                if (Vector2.SignedAngle(transform.right, rb.velocity.normalized) > 0) driftAngle = 1;
+                if (Vector2.SignedAngle(transform.right, rb.velocity.normalized) < 0) driftAngle = -1;
+            }
             isDrifting = true;
-        } 
+        }
         else
         {
             isDrifting = false;
+            driftAngle = 0;
         }
         
         Move(new Vector2(xMove, yMove));
@@ -44,6 +50,9 @@ public class Racer : MonoBehaviour
         {
             newAcceleration *= 1.5f;
             
+            Vector2 driftMove = Quaternion.AngleAxis(45 * driftAngle, Vector3.forward) * transform.right;
+
+            move += driftMove;
         } 
 
         rb.AddForce(move * newAcceleration * Time.deltaTime);
