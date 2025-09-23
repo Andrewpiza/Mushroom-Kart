@@ -118,6 +118,7 @@ public class Racer : MonoBehaviour
     private void LookFoward()
     {
         Vector2 v = rb.velocity;
+        if (v.magnitude < 0.1) return;
 
         float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
 
