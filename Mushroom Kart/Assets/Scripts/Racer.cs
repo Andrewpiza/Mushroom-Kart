@@ -6,7 +6,7 @@ using UnityEngine;
 public class Racer : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float acceleration = 1500;
+    [SerializeField] private float baseAcceleration = 1500;
     [SerializeField] private float baseMaxSpeed = 15;
 
     // Boost
@@ -67,11 +67,11 @@ public class Racer : MonoBehaviour
     public void Move(Vector2 move)
     {
         float maxSpeed = baseMaxSpeed + boost;
-        float newAcceleration = acceleration;
+        float acceleration = baseAcceleration;
 
         if (isDrifting)
         {
-            newAcceleration *= 1.4f;
+            acceleration *= 1.4f;
 
             Vector2 driftMove = Quaternion.AngleAxis(DRIFT_STRENGTH * driftAngle, Vector3.forward) * transform.right;
             move += driftMove;
@@ -86,7 +86,7 @@ public class Racer : MonoBehaviour
             if (boost < 0) boost = 0;
         }
 
-        rb.AddForce(move * newAcceleration * Time.deltaTime);
+        rb.AddForce(move * acceleration * Time.deltaTime);
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
