@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Racer : MonoBehaviour
 {
@@ -93,7 +94,7 @@ public class Racer : MonoBehaviour
         }
 
         LookFoward();
-        if (isJumping)UpdateHeight();
+        if (isJumping) UpdateHeight();
     }
 
 
@@ -104,7 +105,7 @@ public class Racer : MonoBehaviour
 
         hVelocity -= GRAVITY * Time.deltaTime;
 
-        transform.localScale = (height+1) * Vector2.one;
+        transform.localScale = (height + 1) * Vector2.one;
 
         if (height <= 0)
         {
@@ -137,5 +138,14 @@ public class Racer : MonoBehaviour
         if (isJumping) return;
         isJumping = true;
         hVelocity = h;
+    }
+
+    void OnTriggerStay2D(Collider2D c)
+    {
+        if (c.tag == "Map")
+        {
+            TileBase tile = c.GetComponent<Tilemap>().GetTile(c.GetComponent<Tilemap>().WorldToCell(transform.position));
+            if (TileManager.Instance.IsOffMapTile(tile.name)) Debug.Log("s");
+        }
     }
 }
