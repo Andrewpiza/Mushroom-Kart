@@ -9,6 +9,7 @@ public class TileManager : MonoBehaviour
     public static TileManager Instance;
 
     [SerializeField] private Tile[] offMapTiles;
+    [SerializeField] private Tile[] jumpTiles;
 
     void Awake()
     {
@@ -18,6 +19,15 @@ public class TileManager : MonoBehaviour
     public bool IsOffMapTile(string tile)
     {
         foreach (Tile t in offMapTiles)
+        {
+            if (t.name == tile) return true;
+        }
+        return false;
+    }
+    
+    public bool IsJumpTile(string tile)
+    {
+        foreach (Tile t in jumpTiles)
         {
             if (t.name == tile)return true;
         }

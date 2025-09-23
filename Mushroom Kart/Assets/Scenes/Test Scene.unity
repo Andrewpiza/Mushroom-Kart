@@ -3043,6 +3043,7 @@ GameObject:
   - component: {fileID: 1470805992}
   - component: {fileID: 1470805994}
   - component: {fileID: 1470805993}
+  - component: {fileID: 1470805995}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Map
@@ -105861,6 +105862,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 84d8bf5ec25a6784488bb280bdbc8e1b, type: 2}
   - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: 08006e9f22683e24ab66b36e5574c210, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 9332
     m_Data: {fileID: 21300000, guid: 166443adb058b9344964623b35bb1846, type: 3}
@@ -105878,6 +105881,8 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: bd548e371f734204c9e2a98dfef8989e, type: 3}
   - m_RefCount: 7
     m_Data: {fileID: 21300000, guid: 056333f34f6732a4bba63c8f386d6ff8, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 10272
     m_Data:
@@ -105924,6 +105929,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1470805995
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470805991}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &1745615787
 GameObject:
   m_ObjectHideFlags: 0
@@ -106282,6 +106323,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offMapTiles:
   - {fileID: 11400000, guid: 7df6c30f9b7966f4da78f7e3d76897ad, type: 2}
+  jumpTiles:
+  - {fileID: 11400000, guid: cb76945d74f58da4a8a00aad1519248a, type: 2}
+  - {fileID: 11400000, guid: a755f3e556b05614eb2e5b30e89db800, type: 2}
+  - {fileID: 11400000, guid: 38c784f91c61976419fe9957a5ea1b20, type: 2}
 --- !u!1 &2027430986
 GameObject:
   m_ObjectHideFlags: 0

@@ -144,8 +144,15 @@ public class Racer : MonoBehaviour
     {
         if (c.tag == "Map")
         {
-            TileBase tile = c.GetComponent<Tilemap>().GetTile(c.GetComponent<Tilemap>().WorldToCell(transform.position));
-            if (TileManager.Instance.IsOffMapTile(tile.name)) Debug.Log("s");
+            OnTile(c.GetComponent<Tilemap>());
         }
+    }
+
+    public void OnTile(Tilemap tilemap)
+    {
+        TileBase tile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
+        
+        if (TileManager.Instance.IsOffMapTile(tile.name))Debug.Log("Fall off map!");
+        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.5f);
     }
 }
