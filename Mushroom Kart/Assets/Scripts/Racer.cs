@@ -189,7 +189,7 @@ public class Racer : MonoBehaviour
         else if (TileManager.Instance.IsCoinTile(tile.name))
         {
             amountOfCoins++;
-            TileManager.Instance.CoinRespawn(pos);
+            StartCoroutine(TileManager.Instance.RespawnCoin(pos,tile));
         } 
     }
 }

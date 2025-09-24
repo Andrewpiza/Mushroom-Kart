@@ -10,22 +10,17 @@ public class TileManager : MonoBehaviour
 
     private Tilemap objectTilemap;
 
+    private const float COIN_RESPAWN_TIME = 2;
+
     [SerializeField] private Tile[] offMapTiles;
     [SerializeField] private Tile[] jumpTiles;
     [SerializeField] private Tile[] speedBostTiles;
     [SerializeField] private Tile[] coinTiles;
-    private List<Vector3Int> respawningCoins;
 
     void Awake()
     {
         Instance = this;
-        respawningCoins = new List<Vector3Int>();
         objectTilemap = transform.GetChild(1).GetComponent<Tilemap>();
-    }
-
-    void Update()
-    {
-        
     }
 
     public bool IsOffMapTile(string tile)
@@ -64,9 +59,10 @@ public class TileManager : MonoBehaviour
         return false;
     }
 
-    public void CoinRespawn(Vector3Int pos)
+    public IEnumerator RespawnCoin(Vector3Int pos, TileBase tile)
     {
         objectTilemap.SetTile(pos, null);
-        respawningCoins.Add(pos);
+        yield return new WaitForSeconds(COIN_RESPAWN_TIME);
+        objectTilemap.SetTile(pos, tile);
     }
 }

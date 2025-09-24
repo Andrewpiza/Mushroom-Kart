@@ -3486,41 +3486,41 @@ Tilemap:
   m_GameObject: {fileID: 1236267955}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: -2, y: 14, z: 0}
+  - first: {x: 7, y: 32, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 1, y: 14, z: 0}
+  - first: {x: 10, y: 32, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -2, y: 16, z: 0}
+  - first: {x: -2, y: 49, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 1, y: 16, z: 0}
+  - first: {x: 1, y: 49, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3825,10 +3825,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 4
-    m_Data: {fileID: 21300000, guid: 128d8b176a8ce44478a378ce15023092, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 4
+    m_Data: {fileID: 21300000, guid: 128d8b176a8ce44478a378ce15023092, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
@@ -107274,7 +107274,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89b50be500e823c44bdabefa3e0e920b, type: 2}
   coinTiles:
   - {fileID: 11400000, guid: fb0a73d87d301604c8b97ba4312b14f0, type: 2}
-  respawningCoins: []
 --- !u!1 &2027430986
 GameObject:
   m_ObjectHideFlags: 0
