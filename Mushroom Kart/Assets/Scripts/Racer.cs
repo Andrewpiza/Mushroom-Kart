@@ -91,7 +91,7 @@ public class Racer : MonoBehaviour
 
         if (boost > 0)
         {
-            boost -= Time.deltaTime * 2;
+            boost -= Time.deltaTime * (2 + boost / 5);
             if (boost < 0) boost = 0;
         }
 
@@ -177,8 +177,10 @@ public class Racer : MonoBehaviour
     public void OnTile(Tilemap tilemap)
     {
         TileBase tile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
-        
-        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping)FallOff();
-        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f,true);
+        if (!tile) return;
+
+        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
+        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f, true);
+        else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(2);
     }
 }

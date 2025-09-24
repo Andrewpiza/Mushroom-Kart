@@ -10,6 +10,7 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private Tile[] offMapTiles;
     [SerializeField] private Tile[] jumpTiles;
+    [SerializeField] private Tile[] speedBostTiles;
 
     void Awake()
     {
@@ -24,10 +25,19 @@ public class TileManager : MonoBehaviour
         }
         return false;
     }
-    
+
     public bool IsJumpTile(string tile)
     {
         foreach (Tile t in jumpTiles)
+        {
+            if (t.name == tile) return true;
+        }
+        return false;
+    }
+    
+    public bool IsSpeedBoostTile(string tile)
+    {
+        foreach (Tile t in speedBostTiles)
         {
             if (t.name == tile)return true;
         }
