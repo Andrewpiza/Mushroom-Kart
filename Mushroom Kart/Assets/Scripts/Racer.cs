@@ -14,11 +14,12 @@ public class Racer : MonoBehaviour
     private float boost;
 
     // Jump
+    private bool canTrick;
     private bool isJumping;
     private float hVelocity;
     private float height;
-    private const float MAX_HEIGHT = 1;
-    private const float GRAVITY = 6f;
+    private const float MAX_HEIGHT = 1.2f;
+    private const float GRAVITY = 6.6f;
     // Drift
     private bool isDrifting;
     private float driftAngle;
@@ -42,7 +43,12 @@ public class Racer : MonoBehaviour
         float xMove = Input.GetAxisRaw("Horizontal");
         float yMove = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.Space)) Jump(2f);
+        if (Input.GetKey(KeyCode.Space) && canTrick)
+        {
+            canTrick = false;
+            Boost(1);
+        }
+        
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -108,6 +114,8 @@ public class Racer : MonoBehaviour
 
         hVelocity -= GRAVITY * Time.deltaTime;
 
+        if (hVelocity <= MAX_HEIGHT/2) canTrick = false;
+
         if (height <= 0)
         {
             height = 0;
@@ -134,9 +142,10 @@ public class Racer : MonoBehaviour
         rb.velocity = rb.velocity.normalized * (baseMaxSpeed + boost);
     }
 
-    public void Jump(float h)
+    public void Jump(float h, bool trickable)
     {
         if (isJumping) return;
+        canTrick = trickable;
         isJumping = true;
         hVelocity = h;
     }
@@ -169,7 +178,7 @@ public class Racer : MonoBehaviour
     {
         TileBase tile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
         
-        if (TileManager.Instance.IsOffMapTile(tile.name))FallOff();
-        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.5f);
+        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping)FallOff();
+        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f,true);
     }
 }
