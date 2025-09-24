@@ -65,4 +65,21 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(COIN_RESPAWN_TIME);
         objectTilemap.SetTile(pos, tile);
     }
+
+    public Vector3Int FindNearbyTiles(Vector3Int pos)
+    {
+        TileBase tile;
+        for (int x = -1; x < 2; x++)
+        {
+            for (int y = -1; y < 2; y++)
+            {
+                tile = objectTilemap.GetTile(pos + new Vector3Int(x, y, 0));
+                if (tile)
+                {
+                    return pos + new Vector3Int(x, y, 0);
+                } 
+            }
+        }
+        return pos;
+    }
 }

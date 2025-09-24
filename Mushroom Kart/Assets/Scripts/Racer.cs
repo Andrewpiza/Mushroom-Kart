@@ -51,7 +51,7 @@ public class Racer : MonoBehaviour
             canTrick = false;
             Boost(1);
         }
-        
+
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -117,7 +117,7 @@ public class Racer : MonoBehaviour
 
         hVelocity -= GRAVITY * Time.deltaTime;
 
-        if (hVelocity <= MAX_HEIGHT/2) canTrick = false;
+        if (hVelocity <= MAX_HEIGHT / 2) canTrick = false;
 
         if (height <= 0)
         {
@@ -136,6 +136,13 @@ public class Racer : MonoBehaviour
         float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void ChangeCoins(int n)
+    {
+        amountOfCoins += n;
+        if (amountOfCoins > 15) amountOfCoins = 15;
+        else if (amountOfCoins < 0) amountOfCoins = 0;
     }
 
     public void Boost(float b)
@@ -181,15 +188,23 @@ public class Racer : MonoBehaviour
     {
         Vector3Int pos = tilemap.WorldToCell(transform.position);
         TileBase tile = tilemap.GetTile(pos);
-        if (!tile) return;
+        bool nearby = false;
+        
+        if (!tile)
+        {
+            pos = TileManager.Instance.FindNearbyTiles(pos);
+            tile = tilemap.GetTile(pos);
+            nearby = true;
+            if (!tile) return;
+        }
 
-        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
-        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f, true);
-        else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(2);
+        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping && !nearby) FallOff();
+        else if (TileManager.Instance.IsJumpTile(tile.name) && !nearby) Jump(2.6f, true);
+        else if (TileManager.Instance.IsSpeedBoostTile(tile.name) && !nearby) Boost(2);
         else if (TileManager.Instance.IsCoinTile(tile.name))
         {
-            amountOfCoins++;
-            StartCoroutine(TileManager.Instance.RespawnCoin(pos,tile));
-        } 
+            ChangeCoins(1);
+            StartCoroutine(TileManager.Instance.RespawnCoin(pos, tile));
+        }
     }
 }
