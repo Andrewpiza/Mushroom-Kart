@@ -36,7 +36,7 @@ public class Racer : MonoBehaviour
 
     void Start()
     {
-        respawnPoint = Vector2.zero;
+        respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -94,7 +94,7 @@ public class Racer : MonoBehaviour
 
         if (boost > 0)
         {
-            boost -= Time.deltaTime * 2;
+            boost -= Time.deltaTime * (boost/1.5f);
             if (boost < 0) boost = 0;
         }
 
@@ -161,7 +161,7 @@ public class Racer : MonoBehaviour
     }
 
     public void FallOff()
-    {
+    { 
         height -= GRAVITY * Time.deltaTime;
 
         if (height <= -1)
@@ -173,6 +173,7 @@ public class Racer : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             rb.angularVelocity = 0;
+            boost = 0;
         }
     }
 
@@ -189,7 +190,7 @@ public class Racer : MonoBehaviour
         Vector3Int pos = tilemap.WorldToCell(transform.position);
         TileBase tile = tilemap.GetTile(pos);
         bool nearby = false;
-        
+
         if (!tile)
         {
             pos = TileManager.Instance.FindNearbyTiles(pos);
