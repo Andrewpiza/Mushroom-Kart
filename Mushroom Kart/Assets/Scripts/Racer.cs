@@ -28,9 +28,11 @@ public class Racer : MonoBehaviour
     // Other
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private Vector2 respawnPoint;
 
     void Start()
     {
+        respawnPoint = Vector2.zero;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -95,6 +97,7 @@ public class Racer : MonoBehaviour
 
         LookFoward();
         if (isJumping) UpdateHeight();
+        transform.localScale = (height + 1) * Vector2.one;
     }
 
 
@@ -104,8 +107,6 @@ public class Racer : MonoBehaviour
         if (height > MAX_HEIGHT) height = MAX_HEIGHT;
 
         hVelocity -= GRAVITY * Time.deltaTime;
-
-        transform.localScale = (height + 1) * Vector2.one;
 
         if (height <= 0)
         {
@@ -140,6 +141,22 @@ public class Racer : MonoBehaviour
         hVelocity = h;
     }
 
+    public void FallOff()
+    {
+        height -= GRAVITY * Time.deltaTime;
+
+        if (height <= -1)
+        {
+            height = 0;
+            transform.position = respawnPoint;
+        }
+        else if (height <= -0.5)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0;
+        }
+    }
+
     void OnTriggerStay2D(Collider2D c)
     {
         if (c.tag == "Map")
@@ -152,7 +169,7 @@ public class Racer : MonoBehaviour
     {
         TileBase tile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
         
-        if (TileManager.Instance.IsOffMapTile(tile.name))Debug.Log("Fall off map!");
+        if (TileManager.Instance.IsOffMapTile(tile.name))FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.5f);
     }
 }

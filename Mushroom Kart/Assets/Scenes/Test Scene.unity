@@ -2860,7 +2860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d475edaea77b59488e187d160f19fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.25
+  speed: 0.23
   offset: {x: 0, y: 0, z: -10}
 --- !u!1 &610288717
 GameObject:
