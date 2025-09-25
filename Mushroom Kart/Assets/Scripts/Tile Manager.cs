@@ -23,7 +23,7 @@ public class TileManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        objectTilemap = transform.GetChild(1).GetComponent<Tilemap>();
+        objectTilemap = transform.GetChild(2).GetComponent<Tilemap>();
     }
 
     public bool IsOffMapTile(string tile)

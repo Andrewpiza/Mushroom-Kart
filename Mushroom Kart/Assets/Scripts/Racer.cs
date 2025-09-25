@@ -199,14 +199,17 @@ public class Racer : MonoBehaviour
             if (!tile) return;
         }
 
-        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping && !nearby) FallOff();
-        else if (TileManager.Instance.IsJumpTile(tile.name) && !nearby) Jump(2.6f, true);
-        else if (TileManager.Instance.IsSpeedBoostTile(tile.name) && !nearby) Boost(2);
-        else if (TileManager.Instance.IsCoinTile(tile.name))
+        if (TileManager.Instance.IsCoinTile(tile.name))
         {
             ChangeCoins(1);
             StartCoroutine(TileManager.Instance.RespawnCoin(pos, tile));
         }
+
+        if (nearby) return;
+        
+        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
+        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f, true);
+        else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(2);
         else if (TileManager.Instance.IsItemBoxTile(tile.name))
         {
             // Give Item
