@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -33,12 +34,15 @@ public class Racer : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Vector2 respawnPoint;
+    private TextMeshProUGUI coinText;
 
     void Start()
     {
         respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
+        Debug.Log(coinText);
     }
 
     void Update()
@@ -143,6 +147,8 @@ public class Racer : MonoBehaviour
         amountOfCoins += n;
         if (amountOfCoins > 15) amountOfCoins = 15;
         else if (amountOfCoins < 0) amountOfCoins = 0;
+
+        coinText.text = amountOfCoins + "";
     }
 
     public void Boost(float b)
