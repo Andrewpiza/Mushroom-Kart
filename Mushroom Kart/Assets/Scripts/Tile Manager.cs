@@ -88,30 +88,26 @@ public class TileManager : MonoBehaviour
 
     private void SetItemBoxTiles(Vector3Int pos, TileBase tile, Tile[] tiles)
     {
-        if (tile == itemBoxTiles[0]){
-            objectTilemap.SetTile(pos,tiles[0]);
-            objectTilemap.SetTile(pos + Vector3Int.right,tiles[1]);
-            objectTilemap.SetTile(pos + Vector3Int.down,tiles[2]);
-            objectTilemap.SetTile(pos + Vector3Int.right + Vector3Int.down,tiles[3]);
+        Vector3Int[] offSet;
+
+        for (int i = 0; i < 4; i++) {
+            if (tile == itemBoxTiles[i])
+            {
+                offSet = GetOffSetList(i);
+                objectTilemap.SetTile(pos + offSet[0], tiles[0]);
+                objectTilemap.SetTile(pos + offSet[1], tiles[1]);
+                objectTilemap.SetTile(pos + offSet[2], tiles[2]);
+                objectTilemap.SetTile(pos + offSet[3], tiles[3]);
+            }
         }
-        else if (tile == itemBoxTiles[1]){
-            objectTilemap.SetTile(pos,tiles[1]);
-            objectTilemap.SetTile(pos + Vector3Int.left,tiles[0]);
-            objectTilemap.SetTile(pos + Vector3Int.down,tiles[3]);
-            objectTilemap.SetTile(pos + Vector3Int.left + Vector3Int.down,tiles[2]);
-        }
-        else if (tile == itemBoxTiles[2]){
-            objectTilemap.SetTile(pos,tiles[2]);
-            objectTilemap.SetTile(pos + Vector3Int.up,tiles[0]);
-            objectTilemap.SetTile(pos + Vector3Int.right,tiles[3]);
-            objectTilemap.SetTile(pos + Vector3Int.up + Vector3Int.right,tiles[1]);
-        }
-        else if (tile == itemBoxTiles[3]){
-            objectTilemap.SetTile(pos,tiles[3]);
-            objectTilemap.SetTile(pos + Vector3Int.left,tiles[2]);
-            objectTilemap.SetTile(pos + Vector3Int.up,tiles[1]);
-            objectTilemap.SetTile(pos + Vector3Int.left + Vector3Int.up,tiles[0]);
-        }
+    }
+
+    private Vector3Int[] GetOffSetList(int n)
+    {
+        if (n == 0) return new Vector3Int[4] { Vector3Int.zero, Vector3Int.right, Vector3Int.down, Vector3Int.right + Vector3Int.down };
+        if (n == 1) return new Vector3Int[4] { Vector3Int.left, Vector3Int.zero, Vector3Int.down + Vector3Int.left, Vector3Int.down };
+        if (n == 2) return new Vector3Int[4] { Vector3Int.up, Vector3Int.up+ Vector3Int.right, Vector3Int.zero, Vector3Int.right};
+        return new Vector3Int[4] { Vector3Int.left + Vector3Int.up, Vector3Int.up, Vector3Int.left, Vector3Int.zero };
     }
 
     public Vector3Int FindNearbyTile(Vector3Int pos)
