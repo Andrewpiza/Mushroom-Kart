@@ -193,7 +193,7 @@ public class Racer : MonoBehaviour
 
         if (!tile)
         {
-            pos = TileManager.Instance.FindNearbyTiles(pos);
+            pos = TileManager.Instance.FindNearbyTile(pos);
             tile = tilemap.GetTile(pos);
             nearby = true;
             if (!tile) return;
@@ -206,6 +206,11 @@ public class Racer : MonoBehaviour
         {
             ChangeCoins(1);
             StartCoroutine(TileManager.Instance.RespawnCoin(pos, tile));
+        }
+        else if (TileManager.Instance.IsItemBoxTile(tile.name))
+        {
+            // Give Item
+            StartCoroutine(TileManager.Instance.RespawnItemBox(pos, tile));
         }
     }
 }
