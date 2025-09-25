@@ -10,7 +10,8 @@ public class TileManager : MonoBehaviour
 
     private Tilemap objectTilemap;
 
-    private const float COIN_RESPAWN_TIME = 2;
+    private const float COIN_RESPAWN_TIME = 1.75f;
+    private const float ITEM_BOX_RESPAWN_TIME = 2.5f;
 
     [SerializeField] private Tile[] offMapTiles;
     [SerializeField] private Tile[] jumpTiles;
@@ -81,7 +82,7 @@ public class TileManager : MonoBehaviour
     {
         SetItemBoxTiles(pos, tile, disabledItemBoxTiles);
         
-        yield return new WaitForSeconds(COIN_RESPAWN_TIME);
+        yield return new WaitForSeconds(ITEM_BOX_RESPAWN_TIME);
         SetItemBoxTiles(pos, tile, itemBoxTiles);
     }
 
