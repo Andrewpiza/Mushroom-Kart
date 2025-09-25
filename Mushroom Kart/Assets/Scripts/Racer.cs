@@ -42,7 +42,6 @@ public class Racer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
-        Debug.Log(coinText);
     }
 
     void Update()
@@ -55,7 +54,6 @@ public class Racer : MonoBehaviour
             canTrick = false;
             Boost(1);
         }
-
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -82,8 +80,8 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
-        float maxSpeed = baseMaxSpeed + boost;
-        float acceleration = baseAcceleration;
+        float maxSpeed = baseMaxSpeed + boost + (amountOfCoins/10);
+        float acceleration = baseAcceleration + (amountOfCoins*10);
 
         if (isDrifting)
         {
