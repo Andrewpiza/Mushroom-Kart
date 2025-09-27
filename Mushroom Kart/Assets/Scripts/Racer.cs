@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Racer : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class Racer : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 respawnPoint;
     private TextMeshProUGUI coinText;
+    private Image[] itemSlotImages;
 
     void Start()
     {
@@ -226,8 +228,18 @@ public class Racer : MonoBehaviour
         }
     }
 
+    public void SetItem(ItemType i, int index)
+    {
+        item[index] = i;
+    }
+
     public ItemType[] GetItemSlots()
     {
         return item;
+    }
+
+    public Image GetItemSlotImage(int index)
+    {
+        return itemSlotImages[index];
     }
 }

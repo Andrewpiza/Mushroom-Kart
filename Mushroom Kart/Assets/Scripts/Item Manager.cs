@@ -47,11 +47,12 @@ public class ItemManager : MonoBehaviour
 
     private IEnumerator WaitToGiveItemToPlayer(Racer racer, ItemType item)
     {
-        Image itemSlot = null;
+        int itemIndex = 0;
 
+        Image itemSlot = racer.GetItemSlotImage(itemIndex);
         Sprite[] sprites = new Sprite[5];
-
         int spriteIndex = Random.Range(0, sprites.Length);
+        
 
         for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
         {
@@ -59,14 +60,16 @@ public class ItemManager : MonoBehaviour
             spriteIndex++;
             if (spriteIndex >= sprites.Length) spriteIndex = 0;
 
-            if (racer.GetItemSlots()[0] == ItemType.Nothing)
+            if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
             {
-                
+                itemIndex = 0;
+                itemSlot = racer.GetItemSlotImage(itemIndex);
             }
 
             yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
         }
 
+        racer.SetItem(item, itemIndex);
         yield break;
     }
 
