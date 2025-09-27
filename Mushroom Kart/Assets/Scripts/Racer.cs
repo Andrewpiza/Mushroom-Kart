@@ -23,12 +23,16 @@ public class Racer : MonoBehaviour
     private float hVelocity;
     private float height;
     private const float MAX_HEIGHT = 1.2f;
-    private const float GRAVITY = 6.6f;
+    private const float GRAVITY = 6.75f;
+
     // Drift
     private bool isDrifting;
     private float driftAngle;
     private float driftCharge;
     private const float DRIFT_STRENGTH = 48;
+
+    // Item
+    private ItemType[] item;
 
     // Other
     private Rigidbody2D rb;
@@ -42,6 +46,7 @@ public class Racer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
+        item = new ItemType[2];
     }
 
     void Update()
@@ -80,8 +85,8 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
-        float maxSpeed = baseMaxSpeed + boost + (amountOfCoins/10);
-        float acceleration = baseAcceleration + (amountOfCoins*10);
+        float maxSpeed = baseMaxSpeed + boost + (amountOfCoins / 10);
+        float acceleration = baseAcceleration + (amountOfCoins * 10);
 
         if (isDrifting)
         {
@@ -96,7 +101,7 @@ public class Racer : MonoBehaviour
 
         if (boost > 0)
         {
-            boost -= Time.deltaTime * (boost/1.5f);
+            boost -= Time.deltaTime * (boost / 1.5f);
             if (boost < 0) boost = 0;
         }
 
@@ -165,7 +170,7 @@ public class Racer : MonoBehaviour
     }
 
     public void FallOff()
-    { 
+    {
         height -= GRAVITY * Time.deltaTime;
 
         if (height <= -1)
@@ -210,14 +215,19 @@ public class Racer : MonoBehaviour
         }
 
         if (nearby) return;
-        
+
         if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f, true);
         else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(2);
         else if (TileManager.Instance.IsItemBoxTile(tile.name))
         {
-            // Give Item
+            ItemManager.Instance.GiveItem(this);
             StartCoroutine(TileManager.Instance.RespawnItemBox(pos, tile));
         }
+    }
+
+    public ItemType[] GetItemSlots()
+    {
+        return item;
     }
 }

@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public enum ItemType
+{
+    Nothing,
+    Mushroom
+}
+
+public class ItemManager : MonoBehaviour
+{
+    public static ItemManager Instance;
+
+    private const float TIME_TO_GET_ITEM = 2;
+    private const float ITEMSLOT_CHANGE_TIME = 0.1f;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void UseItem(Racer racer, ItemType item)
+    {
+        switch (item)
+        {
+            case ItemType.Mushroom:
+                racer.Boost(2);
+                break;
+        }
+    }
+
+    public void GiveItem(Racer racer)
+    {
+        // Get Item
+        ItemType item = GetItem();
+
+
+    }
+
+    private IEnumerator WaitToGiveItemToPlayer(Racer racer, ItemType item)
+    {
+        Image itemSlot = null;
+
+        Sprite[] sprites = new Sprite[5];
+
+        int spriteIndex = Random.Range(0, sprites.Length);
+
+        for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
+        {
+            itemSlot.sprite = sprites[spriteIndex];
+            spriteIndex++;
+            if (spriteIndex >= sprites.Length) spriteIndex = 0;
+
+            if (racer.GetItemSlots()[0] == ItemType.Nothing)
+            {
+                
+            }
+
+            yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
+        }
+
+        yield break;
+    }
+
+    public ItemType GetItem()
+    {
+        return ItemType.Mushroom;
+    }
+}
