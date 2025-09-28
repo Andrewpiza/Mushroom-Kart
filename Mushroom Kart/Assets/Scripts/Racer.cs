@@ -16,7 +16,8 @@ public class Racer : MonoBehaviour
     private int amountOfCoins;
 
     // Boost
-    private float boost;
+    [SerializeField]private float boost;
+    private const float MAX_BOOST = 10f;
 
     // Jump
     private bool canTrick;
@@ -61,7 +62,13 @@ public class Racer : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && canTrick)
         {
             canTrick = false;
-            Boost(1);
+            Boost(1.8f);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            ItemManager.Instance.UseItem(this, item[0]);
+            item[0] = ItemType.Nothing;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -89,7 +96,7 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
-        float maxSpeed = baseMaxSpeed + boost + (amountOfCoins / 10);
+        float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost,0,MAX_BOOST) + (amountOfCoins / 10);
         float acceleration = baseAcceleration + (amountOfCoins * 10);
 
         if (isDrifting)
@@ -99,13 +106,13 @@ public class Racer : MonoBehaviour
             Vector2 driftMove = Quaternion.AngleAxis(DRIFT_STRENGTH * driftAngle, Vector3.forward) * transform.right;
             move += driftMove;
 
-            driftCharge += Time.deltaTime / 4;
-            if (move != Vector2.zero && Vector2.Angle(move, driftMove) < 25) driftCharge += Time.deltaTime / 2;
+            driftCharge += Time.deltaTime / 3.5f;
+            if (move != Vector2.zero && Vector2.Angle(move, driftMove) < 25) driftCharge += Time.deltaTime / 1.4f;
         }
 
         if (boost > 0)
         {
-            boost -= Time.deltaTime * (boost / 1.5f);
+            boost -= Time.deltaTime * (boost / 1.3f);
             if (boost < 0) boost = 0;
         }
 
@@ -221,8 +228,8 @@ public class Racer : MonoBehaviour
         if (nearby) return;
 
         if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
-        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.6f, true);
-        else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(2);
+        else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.25f, true);
+        else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(6);
         else if (TileManager.Instance.IsItemBoxTile(tile.name))
         {
             ItemManager.Instance.GiveItem(this);

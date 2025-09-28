@@ -26,7 +26,7 @@ public class ItemManager : MonoBehaviour
         switch (item)
         {
             case ItemType.Mushroom:
-                racer.Boost(2);
+                racer.Boost(12);
                 break;
         }
     }
