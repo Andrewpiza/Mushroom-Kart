@@ -37,7 +37,7 @@ public class Racer : MonoBehaviour
 
     // Other
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    private Transform spriteTransform;
     private Vector2 respawnPoint;
     private TextMeshProUGUI coinText;
     private Image[] itemSlotImages;
@@ -46,9 +46,11 @@ public class Racer : MonoBehaviour
     {
         respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteTransform = transform.GetChild(0);
         coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
         item = new ItemType[2];
+        itemSlotImages = new Image[2];
+        itemSlotImages[0] = GameObject.Find("Item Slot").GetComponent<Image>();
     }
 
     void Update()
@@ -115,7 +117,7 @@ public class Racer : MonoBehaviour
 
         LookFoward();
         if (isJumping) UpdateHeight();
-        transform.localScale = (height + 1) * Vector2.one;
+        spriteTransform.localScale = (height + 1) * Vector2.one;
     }
 
 
@@ -131,7 +133,7 @@ public class Racer : MonoBehaviour
         if (height <= 0)
         {
             height = 0;
-            transform.localScale = Vector2.one;
+            spriteTransform.localScale = Vector2.one;
             hVelocity = 0;
             isJumping = false;
         }

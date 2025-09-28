@@ -114602,7 +114602,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505955184}
   m_CullTransparentMesh: 1
---- !u!1 &1745615787
+--- !u!1 &1736269535
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114610,39 +114610,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1745615790}
-  - component: {fileID: 1745615789}
-  - component: {fileID: 1745615792}
-  - component: {fileID: 1745615791}
-  - component: {fileID: 1745615788}
+  - component: {fileID: 1736269536}
+  - component: {fileID: 1736269537}
   m_Layer: 6
-  m_Name: Racer
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1745615788
-MonoBehaviour:
+--- !u!4 &1736269536
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745615787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 156fe2fe718a66b40995141e95cdcb12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseAcceleration: 1500
-  baseMaxSpeed: 16
---- !u!212 &1745615789
+  m_GameObject: {fileID: 1736269535}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1745615790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!212 &1736269537
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745615787}
+  m_GameObject: {fileID: 1736269535}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -114688,6 +114686,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1745615787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1745615790}
+  - component: {fileID: 1745615792}
+  - component: {fileID: 1745615791}
+  - component: {fileID: 1745615788}
+  m_Layer: 6
+  m_Name: Racer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1745615788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745615787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156fe2fe718a66b40995141e95cdcb12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAcceleration: 1500
+  baseMaxSpeed: 16
 --- !u!4 &1745615790
 Transform:
   m_ObjectHideFlags: 0
@@ -114700,7 +114731,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1736269536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!50 &1745615791
@@ -114910,6 +114942,7 @@ GameObject:
   - component: {fileID: 1915688556}
   - component: {fileID: 1915688555}
   - component: {fileID: 1915688557}
+  - component: {fileID: 1915688558}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -114983,6 +115016,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 135c17754a113a34cb018b7cc0989b2f, type: 2}
   - {fileID: 11400000, guid: 343bb9911fd082d42bfd9034d986cdd0, type: 2}
   - {fileID: 11400000, guid: ac3b35673bfbb664084ea92a64654789, type: 2}
+--- !u!114 &1915688558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915688554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62d9a07a53b96c47811b064a75af470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlots:
+  - {fileID: 21300000, guid: b1193c48f9c744d4f9ccf23a96206a72, type: 3}
+  - {fileID: 21300000, guid: 78be727ae6e90ff41b6a42cea7e005e0, type: 3}
 --- !u!1 &2027430986
 GameObject:
   m_ObjectHideFlags: 0

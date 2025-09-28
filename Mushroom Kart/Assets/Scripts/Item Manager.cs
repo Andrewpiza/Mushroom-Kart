@@ -21,12 +21,6 @@ public class ItemManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void UseItem(Racer racer, ItemType item)
     {
         switch (item)
@@ -42,17 +36,18 @@ public class ItemManager : MonoBehaviour
         // Get Item
         ItemType item = GetItem();
 
-
+        StartCoroutine(WaitToGiveItemToPlayer(racer, item));
     }
+
+    public Sprite[] itemSlots;
 
     private IEnumerator WaitToGiveItemToPlayer(Racer racer, ItemType item)
     {
         int itemIndex = 0;
 
         Image itemSlot = racer.GetItemSlotImage(itemIndex);
-        Sprite[] sprites = new Sprite[5];
+        Sprite[] sprites = itemSlots;
         int spriteIndex = Random.Range(0, sprites.Length);
-        
 
         for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
         {
