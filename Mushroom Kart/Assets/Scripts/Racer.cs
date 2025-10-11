@@ -96,7 +96,7 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
-        float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost,0,MAX_BOOST) + (amountOfCoins / 10);
+        float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);
         float acceleration = baseAcceleration + (amountOfCoins * 10);
 
         if (isDrifting)
@@ -125,6 +125,18 @@ public class Racer : MonoBehaviour
         LookFoward();
         if (isJumping) UpdateHeight();
         spriteTransform.localScale = (height + 1) * Vector2.one;
+    }
+    
+    public void Hit(float hitTime,float momentumLoss)
+    {
+
+        rb.linearVelocity = rb.linearVelocity * momentumLoss;
+        rb.angularVelocity = 150;
+
+        ChangeCoins(-2);
+
+
+        boost = 0;
     }
 
 

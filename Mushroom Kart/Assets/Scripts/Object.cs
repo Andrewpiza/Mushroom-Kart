@@ -19,6 +19,11 @@ public class Object : MonoBehaviour
         spriteTransform = transform.GetChild(0);
     }
 
+    void Update()
+    {
+        if (isJumping) UpdateHeight();
+    }
+
     public void UpdateHeight()
     {
         height += hVelocity * Time.deltaTime;
