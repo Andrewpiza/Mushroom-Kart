@@ -8,7 +8,7 @@ public class Obstacle : Object
     [SerializeField] private float momentumLoss = 0.25f;
     [SerializeField] private float maxHits = 1;
     private GameObject owner;
-    private float ownerProtectTime;
+    private float ownerProtectTime = 1;
     private float timesHit;
 
     void OnTriggerStay2D(Collider2D c)
@@ -24,10 +24,23 @@ public class Obstacle : Object
         }
     }
 
+    void Update()
+    {
+        ownerProtectTime -= Time.deltaTime;
+        if (ownerProtectTime == 0) owner = null;
+
+        if (isJumping) UpdateHeight();
+    }
+
     private void HitRacer(GameObject racer)
     {
         racer.GetComponent<Racer>().Hit(hitTime, momentumLoss);
         if (timesHit >= maxHits) DestroyObstacle();
+    }
+
+    public void SetOwner(GameObject o)
+    {
+        owner = o;
     }
 
     private void HitItem()

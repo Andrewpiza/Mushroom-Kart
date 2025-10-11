@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class Object : MonoBehaviour
 {
     // Jumping
-    private bool isJumping;
+    protected bool isJumping;
     private float hVelocity;
     private float height;
     private const float MAX_HEIGHT = 1.2f;
