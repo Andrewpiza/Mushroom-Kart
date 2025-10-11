@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public enum ItemType
 {
     Nothing,
-    Mushroom
+    Mushroom,
+    Banana
 }
 
 public class ItemManager : MonoBehaviour
 {
+    [SerializeField] private Sprite emptyItemSlot;
     public static ItemManager Instance;
 
     private const float TIME_TO_GET_ITEM = 2;
@@ -28,7 +30,11 @@ public class ItemManager : MonoBehaviour
             case ItemType.Mushroom:
                 racer.Boost(12);
                 break;
+            case ItemType.Banana:
+                //racer.Boost(12);
+                break;
         }
+        racer.GetItemSlotImage(0).sprite = emptyItemSlot;
     }
 
     public void GiveItem(Racer racer)
