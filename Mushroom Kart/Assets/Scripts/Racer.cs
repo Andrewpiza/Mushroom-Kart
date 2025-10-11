@@ -75,8 +75,8 @@ public class Racer : MonoBehaviour
         {
             if (driftAngle == 0)
             {
-                if (Vector2.SignedAngle(transform.right, rb.velocity.normalized) > 0.25) driftAngle = 1;
-                if (Vector2.SignedAngle(transform.right, rb.velocity.normalized) < -0.25) driftAngle = -1;
+                if (Vector2.SignedAngle(transform.right, rb.linearVelocity.normalized) > 0.25) driftAngle = 1;
+                if (Vector2.SignedAngle(transform.right, rb.linearVelocity.normalized) < -0.25) driftAngle = -1;
             }
             else
             {
@@ -117,9 +117,9 @@ public class Racer : MonoBehaviour
         }
 
         rb.AddForce(move * acceleration * Time.deltaTime);
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
 
         LookFoward();
@@ -148,7 +148,7 @@ public class Racer : MonoBehaviour
 
     private void LookFoward()
     {
-        Vector2 v = rb.velocity;
+        Vector2 v = rb.linearVelocity;
         if (v.magnitude < 0.1) return;
 
         float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
@@ -169,7 +169,7 @@ public class Racer : MonoBehaviour
     {
         boost += b;
 
-        rb.velocity = rb.velocity.normalized * (baseMaxSpeed + boost);
+        rb.linearVelocity = rb.linearVelocity.normalized * (baseMaxSpeed + boost);
     }
 
     public void Jump(float h, bool trickable)
@@ -191,7 +191,7 @@ public class Racer : MonoBehaviour
         }
         else if (height <= -0.5)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0;
             boost = 0;
         }
