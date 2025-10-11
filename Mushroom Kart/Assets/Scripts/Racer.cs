@@ -95,7 +95,10 @@ public class Racer : MonoBehaviour
         }
 
         hitTimer -= Time.deltaTime;
-        if (hitTimer <= 0)Move(new Vector2(xMove, yMove));
+        if (hitTimer <= 0) Move(new Vector2(xMove, yMove));
+        
+        if (isJumping) UpdateHeight();
+        spriteTransform.localScale = (height + 1) * Vector2.one;
     }
 
     public void Move(Vector2 move)
@@ -127,8 +130,6 @@ public class Racer : MonoBehaviour
         }
 
         LookFoward();
-        if (isJumping) UpdateHeight();
-        spriteTransform.localScale = (height + 1) * Vector2.one;
     }
     
     public void Hit(float hitTime,float momentumLoss)
