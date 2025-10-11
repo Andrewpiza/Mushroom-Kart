@@ -27,7 +27,7 @@ public class Obstacle : Object
     void Update()
     {
         ownerProtectTime -= Time.deltaTime;
-        if (ownerProtectTime == 0) owner = null;
+        if (ownerProtectTime <= 0) owner = null;
 
         if (isJumping) UpdateHeight();
     }

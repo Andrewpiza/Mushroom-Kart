@@ -15,6 +15,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Sprite emptyItemSlot;
     public static ItemManager Instance;
 
+    [SerializeField] private GameObject banana;
+
     private const float TIME_TO_GET_ITEM = 2;
     private const float ITEMSLOT_CHANGE_TIME = 0.1f;
     // Start is called before the first frame update
@@ -31,7 +33,9 @@ public class ItemManager : MonoBehaviour
                 racer.Boost(12);
                 break;
             case ItemType.Banana:
-                //racer.Boost(12);
+                GameObject b = Instantiate(banana, racer.transform.position, Quaternion.identity);
+                b.GetComponent<Obstacle>().SetOwner(racer.gameObject);
+
                 break;
         }
         racer.GetItemSlotImage(0).sprite = emptyItemSlot;
@@ -76,6 +80,6 @@ public class ItemManager : MonoBehaviour
 
     public ItemType GetItem()
     {
-        return ItemType.Mushroom;
+        return ItemType.Banana;
     }
 }
