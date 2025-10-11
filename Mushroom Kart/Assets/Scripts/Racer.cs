@@ -12,6 +12,9 @@ public class Racer : MonoBehaviour
     [SerializeField] private float baseAcceleration = 1500;
     [SerializeField] private float baseMaxSpeed = 15;
 
+    // Hit
+    private float hitTimer = 0;
+
     // Coins
     private int amountOfCoins;
 
@@ -91,7 +94,8 @@ public class Racer : MonoBehaviour
             driftCharge = 0;
         }
 
-        Move(new Vector2(xMove, yMove));
+        hitTimer -= Time.deltaTime;
+        if (hitTimer <= 0)Move(new Vector2(xMove, yMove));
     }
 
     public void Move(Vector2 move)
@@ -129,12 +133,11 @@ public class Racer : MonoBehaviour
     
     public void Hit(float hitTime,float momentumLoss)
     {
-
+        hitTimer = hitTime;
         rb.linearVelocity = rb.linearVelocity * momentumLoss;
         rb.angularVelocity = 150;
 
         ChangeCoins(-2);
-
 
         boost = 0;
     }

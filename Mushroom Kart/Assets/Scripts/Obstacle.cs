@@ -26,7 +26,6 @@ public class Obstacle : Object
 
     private void HitRacer(GameObject racer)
     {
-        Debug.Log("HIT RACER");
         racer.GetComponent<Racer>().Hit(hitTime, momentumLoss);
         if (timesHit >= maxHits) DestroyObstacle();
     }
