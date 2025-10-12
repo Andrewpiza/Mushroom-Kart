@@ -8,7 +8,7 @@ public class Obstacle : Object
     [SerializeField] private float momentumLoss = 0.25f;
     [SerializeField] private float maxHits = 1;
     private GameObject owner;
-    private float ownerProtectTime = 0.5f;
+    private float ownerProtectTime = 0.6f;
     private float timesHit;
 
     void OnTriggerStay2D(Collider2D c)
