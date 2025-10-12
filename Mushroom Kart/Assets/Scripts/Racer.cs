@@ -70,7 +70,12 @@ public class Racer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
         {
-            ItemManager.Instance.UseItem(this, item[0]);
+            ItemManager.Instance.UseItem(this, item[0], ItemDirection.Backward);
+            item[0] = ItemType.Nothing;
+        }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
             item[0] = ItemType.Nothing;
         }
 

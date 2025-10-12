@@ -10,6 +10,12 @@ public enum ItemType
     Banana
 }
 
+public enum ItemDirection
+{
+    Foward,
+    Backward 
+}
+
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] private Sprite emptyItemSlot;
@@ -25,7 +31,7 @@ public class ItemManager : MonoBehaviour
         Instance = this;
     }
 
-    public void UseItem(Racer racer, ItemType item)
+    public void UseItem(Racer racer, ItemType item, ItemDirection dir)
     {
         switch (item)
         {
@@ -33,12 +39,23 @@ public class ItemManager : MonoBehaviour
                 racer.Boost(12);
                 break;
             case ItemType.Banana:
-                GameObject b = Instantiate(banana, racer.transform.position, Quaternion.identity);
-                b.GetComponent<Obstacle>().SetOwner(racer.gameObject);
-
+                if (dir == ItemDirection.Backward) SpawnItem(racer, banana, -racer.transform.right * 75f);
+                else
+                {
+                    SpawnItem(racer, banana, racer.transform.right * 600);
+                }
                 break;
         }
         racer.GetItemSlotImage(0).sprite = emptyItemSlot;
+    }
+    
+    public void SpawnItem(Racer racer,GameObject itemObject,Vector3 dir)
+    {
+        GameObject item = Instantiate(itemObject, racer.transform.position, Quaternion.identity);
+
+        item.GetComponent<Rigidbody2D>().AddForce(dir);
+
+        item.GetComponent<Obstacle>().SetOwner(racer.gameObject);
     }
 
     public void GiveItem(Racer racer)
