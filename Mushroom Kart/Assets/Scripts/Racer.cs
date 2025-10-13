@@ -248,7 +248,8 @@ public class Racer : MonoBehaviour
 
         if (nearby) return;
 
-        if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
+        if (TileManager.Instance.IsOffRoadTile(tile.name) && !isJumping) Debug.Log("OFF ROAD");
+        else if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.25f, true);
         else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(6);
         else if (TileManager.Instance.IsItemBoxTile(tile.name))

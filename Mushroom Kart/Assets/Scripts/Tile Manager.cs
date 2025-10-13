@@ -13,6 +13,7 @@ public class TileManager : MonoBehaviour
     private const float COIN_RESPAWN_TIME = 1.75f;
     private const float ITEM_BOX_RESPAWN_TIME = 2.5f;
 
+    [SerializeField] private Tile[] offRoadTiles;
     [SerializeField] private Tile[] offMapTiles;
     [SerializeField] private Tile[] jumpTiles;
     [SerializeField] private Tile[] speedBostTiles;
@@ -24,6 +25,15 @@ public class TileManager : MonoBehaviour
     {
         Instance = this;
         objectTilemap = transform.GetChild(2).GetComponent<Tilemap>();
+    }
+
+    public bool IsOffRoadTile(string tile)
+    {
+        foreach (Tile t in offRoadTiles)
+        {
+            if (t.name == tile) return true;
+        }
+        return false;
     }
 
     public bool IsOffMapTile(string tile)
