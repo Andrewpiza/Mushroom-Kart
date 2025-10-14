@@ -37,7 +37,7 @@ public class Racer : MonoBehaviour
     private const float DRIFT_STRENGTH = 48;
 
     // Item
-    private ItemType[] item;
+    [SerializeField]private ItemType[] item;
 
     // Other
     private Rigidbody2D rb;
@@ -55,6 +55,7 @@ public class Racer : MonoBehaviour
         item = new ItemType[2];
         itemSlotImages = new Image[2];
         itemSlotImages[0] = GameObject.Find("Item Slot").GetComponent<Image>();
+        itemSlotImages[1] = GameObject.Find("Item Slot 2").GetComponent<Image>();
     }
 
     void Update()
@@ -68,15 +69,13 @@ public class Racer : MonoBehaviour
             Boost(1.8f);
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ItemManager.Instance.UseItem(this, item[0], ItemDirection.Backward);
-            item[0] = ItemType.Nothing;
         }
-        else if (Input.GetKey(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
             ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
-            item[0] = ItemType.Nothing;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))

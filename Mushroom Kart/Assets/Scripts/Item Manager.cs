@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum ItemType
 {
     Nothing,
+    GettingItem,
     Mushroom,
     Banana
 }
@@ -46,7 +47,19 @@ public class ItemManager : MonoBehaviour
                 }
                 break;
         }
-        racer.GetItemSlotImage(0).sprite = emptyItemSlot;
+
+        if (racer.GetItemSlots()[1] != ItemType.Nothing)
+        {
+            racer.GetItemSlotImage(0).sprite = racer.GetItemSlotImage(1).sprite;
+            racer.GetItemSlotImage(1).sprite = emptyItemSlot;
+            racer.SetItem(racer.GetItemSlots()[1], 0);
+            racer.SetItem(ItemType.Nothing, 1);
+        }
+        else
+        {
+            racer.GetItemSlotImage(0).sprite = emptyItemSlot;
+            racer.GetItemSlots()[0] = ItemType.Nothing;
+        }
     }
     
     public void SpawnItem(Racer racer,GameObject itemObject,Vector3 dir)
@@ -60,6 +73,7 @@ public class ItemManager : MonoBehaviour
 
     public void GiveItem(Racer racer)
     {
+        if (racer.GetItemSlots()[1] != ItemType.Nothing) return;
         // Get Item
         ItemType item = GetItem();
 
@@ -71,10 +85,13 @@ public class ItemManager : MonoBehaviour
     private IEnumerator WaitToGiveItemToPlayer(Racer racer, ItemType item)
     {
         int itemIndex = 0;
+        if (racer.GetItemSlots()[0] != ItemType.Nothing) itemIndex = 1;
 
         Image itemSlot = racer.GetItemSlotImage(itemIndex);
         Sprite[] sprites = itemSlots;
         int spriteIndex = Random.Range(0, sprites.Length);
+
+        racer.SetItem(ItemType.GettingItem, itemIndex);
 
         for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
         {
@@ -97,6 +114,6 @@ public class ItemManager : MonoBehaviour
 
     public ItemType GetItem()
     {
-        return ItemType.Banana;
+        return ItemType.Mushroom;
     }
 }
