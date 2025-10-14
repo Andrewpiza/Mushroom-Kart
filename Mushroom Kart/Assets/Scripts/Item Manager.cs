@@ -34,6 +34,7 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem(Racer racer, ItemType item, ItemDirection dir)
     {
+        if (item == ItemType.Nothing || item == ItemType.GettingItem) return;
         switch (item)
         {
             case ItemType.Mushroom:
@@ -48,7 +49,7 @@ public class ItemManager : MonoBehaviour
                 break;
         }
 
-        if (racer.GetItemSlots()[1] != ItemType.Nothing)
+        if (racer.GetItemSlots()[1] != ItemType.Nothing && racer.GetItemSlots()[1] != ItemType.GettingItem)
         {
             racer.GetItemSlotImage(0).sprite = racer.GetItemSlotImage(1).sprite;
             racer.GetItemSlotImage(1).sprite = emptyItemSlot;
@@ -98,11 +99,15 @@ public class ItemManager : MonoBehaviour
             itemSlot.sprite = sprites[spriteIndex];
             spriteIndex++;
             if (spriteIndex >= sprites.Length) spriteIndex = 0;
-
+            
             if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
             {
+                racer.GetItemSlotImage(1).sprite = emptyItemSlot;
+                racer.SetItem(ItemType.GettingItem, 0);
+                racer.SetItem(ItemType.Nothing, 1);
                 itemIndex = 0;
                 itemSlot = racer.GetItemSlotImage(itemIndex);
+                
             }
 
             yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
