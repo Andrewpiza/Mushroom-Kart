@@ -123,7 +123,7 @@ public class Racer : MonoBehaviour
 
         if (boost > 0)
         {
-            boost -= Time.deltaTime * (boost / 1.3f);
+            boost -= Time.deltaTime * (boost / 1.35f);
             if (boost < 0) boost = 0;
         }
 
