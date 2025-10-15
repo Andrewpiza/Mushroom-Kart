@@ -22,6 +22,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Sprite emptyItemSlot;
     public static ItemManager Instance;
 
+    public ItemPlacements itemPlacements;
+
     [SerializeField] private GameObject banana;
 
     private const float TIME_TO_GET_ITEM = 2;
@@ -63,7 +65,7 @@ public class ItemManager : MonoBehaviour
         }
     }
     
-    public void SpawnItem(Racer racer,GameObject itemObject,Vector3 dir)
+    private void SpawnItem(Racer racer,GameObject itemObject,Vector3 dir)
     {
         GameObject item = Instantiate(itemObject, racer.transform.position, Quaternion.identity);
 
@@ -76,12 +78,10 @@ public class ItemManager : MonoBehaviour
     {
         if (racer.GetItemSlots()[1] != ItemType.Nothing) return;
         // Get Item
-        ItemObject item = GetItem();
+        ItemObject item = GetItem(1);
 
         StartCoroutine(WaitToGiveItemToPlayer(racer, item));
     }
-
-    public ItemObject[] itemSlots;
 
     private IEnumerator WaitToGiveItemToPlayer(Racer racer, ItemObject item)
     {
@@ -89,9 +89,8 @@ public class ItemManager : MonoBehaviour
         if (racer.GetItemSlots()[0] != ItemType.Nothing) itemIndex = 1;
 
         Image itemSlot = racer.GetItemSlotImage(itemIndex);
-        Sprite[] sprites = new Sprite[2];
-        sprites[0] = itemSlots[0].itemSlotSprite;
-        sprites[1] = itemSlots[1].itemSlotSprite;
+        Sprite[] sprites = GetAllSprites();
+
         int spriteIndex = Random.Range(0, sprites.Length);
 
         racer.SetItem(ItemType.GettingItem, itemIndex);
@@ -119,9 +118,42 @@ public class ItemManager : MonoBehaviour
         yield break;
     }
 
-    public ItemObject GetItem()
+    private ItemObject GetItem(float distanceToFirst)
     {
-        return itemSlots[0];
-        //return null;
+        List<ItemChance> items = new List<ItemChance>();
+
+        foreach (ItemChance item in itemPlacements.items)
+        {
+            if (distanceToFirst >= item.minDistance && distanceToFirst <= item.maxDistance) items.Add(item);
+        }
+
+        int totalWeight = 0;
+        foreach (ItemChance item in items)
+        {
+            totalWeight += item.weight;
+        }
+
+        int counter = 0;
+        int randomValue = Random.Range(0, totalWeight);
+
+        foreach (ItemChance item in items)
+        {
+            counter += item.weight;
+            if (counter > randomValue)
+            {
+                return item.item;
+            }
+        }
+
+        return itemPlacements.items[0].item;
+    }
+    
+    private Sprite[] GetAllSprites()
+    {
+        Sprite[] sprites = new Sprite[itemPlacements.items.Length];
+        for(int i = 0;i < sprites.Length;i++){
+            sprites[i] = itemPlacements.items[i].item.itemSlotSprite;
+        }
+        return sprites;  
     }
 }
