@@ -8,7 +8,8 @@ public enum ItemType
     Nothing,
     GettingItem,
     Mushroom,
-    Banana
+    Banana,
+    GreenShell
 }
 
 public enum ItemDirection
@@ -24,7 +25,7 @@ public class ItemManager : MonoBehaviour
 
     public ItemPlacements itemPlacements;
 
-    [SerializeField] private GameObject banana;
+    [SerializeField] private GameObject[] itemGameObjects;
 
     private const float TIME_TO_GET_ITEM = 2;
     private const float ITEMSLOT_CHANGE_TIME = 0.1f;
@@ -43,10 +44,17 @@ public class ItemManager : MonoBehaviour
                 racer.Boost(12);
                 break;
             case ItemType.Banana:
-                if (dir == ItemDirection.Backward) SpawnItem(racer, banana, -racer.transform.right * 75f);
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[0], -racer.transform.right * 75f);
                 else
                 {
-                    SpawnItem(racer, banana, racer.transform.right * 600);
+                    SpawnItem(racer, itemGameObjects[0], racer.transform.right * 600);
+                }
+                break;
+            case ItemType.GreenShell:
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[1], -racer.transform.right * 250);
+                else
+                {
+                    SpawnItem(racer, itemGameObjects[1], racer.transform.right * 250);
                 }
                 break;
         }

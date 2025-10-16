@@ -107,6 +107,8 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
+        rb.angularVelocity = 0;
+        
         float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);
         float acceleration = baseAcceleration + (amountOfCoins * 10);
 
