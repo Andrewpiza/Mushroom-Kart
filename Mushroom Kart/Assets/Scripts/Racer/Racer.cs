@@ -1,105 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class Racer : MonoBehaviour
 {
+
     [Header("Movement")]
     [SerializeField] private float baseAcceleration = 1500;
     [SerializeField] private float baseMaxSpeed = 15;
 
     // Hit
-    private float hitTimer = 0;
+    protected float hitTimer = 0;
 
     // Coins
-    private int amountOfCoins;
+    protected int amountOfCoins;
 
     // Boost
     [SerializeField]private float boost;
     private const float MAX_BOOST = 10f;
 
     // Jump
-    private bool canTrick;
-    private bool isJumping;
+    protected bool canTrick;
+    protected bool isJumping;
     private float hVelocity;
-    private float height;
+    protected float height;
     private const float MAX_HEIGHT = 1.2f;
     private const float GRAVITY = 6.75f;
 
     // Drift
-    private bool isDrifting;
-    private float driftAngle;
-    private float driftCharge;
+    protected bool isDrifting;
+    protected float driftAngle;
+    protected float driftCharge;
     private const float DRIFT_STRENGTH = 48;
 
     // Item
-    [SerializeField]private ItemType[] item;
+    [SerializeField]protected ItemType[] item;
 
     // Other
-    private Rigidbody2D rb;
-    private Transform spriteTransform;
+    protected Rigidbody2D rb;
+    protected Transform spriteTransform;
     private Vector2 respawnPoint;
-    private TextMeshProUGUI coinText;
-    private Image[] itemSlotImages;
+
 
     void Start()
     {
         respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteTransform = transform.GetChild(0);
-        coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
         item = new ItemType[2];
-        itemSlotImages = new Image[2];
-        itemSlotImages[0] = GameObject.Find("Item Slot").GetComponent<Image>();
-        itemSlotImages[1] = GameObject.Find("Item Slot 2").GetComponent<Image>();
     }
 
-    void Update()
+    protected void UpdateRacer()
     {
-        float xMove = Input.GetAxisRaw("Horizontal");
-        float yMove = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKey(KeyCode.Space) && canTrick)
-        {
-            canTrick = false;
-            Boost(1.8f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ItemManager.Instance.UseItem(this, item[0], ItemDirection.Backward);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            if (driftAngle == 0)
-            {
-                if (Vector2.SignedAngle(transform.right, rb.linearVelocity.normalized) > 0.25) driftAngle = 1;
-                if (Vector2.SignedAngle(transform.right, rb.linearVelocity.normalized) < -0.25) driftAngle = -1;
-            }
-            else
-            {
-                isDrifting = true;
-            }
-        }
-        else if (isDrifting == true)
-        {
-            isDrifting = false;
-            driftAngle = 0;
-            Boost(driftCharge);
-            driftCharge = 0;
-        }
-
         hitTimer -= Time.deltaTime;
-        if (hitTimer <= 0) Move(new Vector2(xMove, yMove));
         
         if (isJumping) UpdateHeight();
         spriteTransform.localScale = (height + 1) * Vector2.one;
@@ -178,13 +134,11 @@ public class Racer : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    public void ChangeCoins(int n)
+    public virtual void ChangeCoins(int n)
     {
         amountOfCoins += n;
         if (amountOfCoins > 15) amountOfCoins = 15;
         else if (amountOfCoins < 0) amountOfCoins = 0;
-
-        coinText.text = amountOfCoins + "";
     }
 
     public void Boost(float b)
@@ -271,8 +225,8 @@ public class Racer : MonoBehaviour
         return item;
     }
 
-    public Image GetItemSlotImage(int index)
+    public virtual bool IsPlayer()
     {
-        return itemSlotImages[index];
+        return false;
     }
 }

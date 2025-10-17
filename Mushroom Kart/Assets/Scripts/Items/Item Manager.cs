@@ -51,24 +51,29 @@ public class ItemManager : MonoBehaviour
                 }
                 break;
             case ItemType.GreenShell:
-                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[1], -racer.transform.right * 250);
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[1], -racer.transform.right * 350);
                 else
                 {
-                    SpawnItem(racer, itemGameObjects[1], racer.transform.right * 250);
+                    SpawnItem(racer, itemGameObjects[1], racer.transform.right * 350);
                 }
                 break;
         }
 
         if (racer.GetItemSlots()[1] != ItemType.Nothing && racer.GetItemSlots()[1] != ItemType.GettingItem)
         {
-            racer.GetItemSlotImage(0).sprite = racer.GetItemSlotImage(1).sprite;
-            racer.GetItemSlotImage(1).sprite = emptyItemSlot;
+            if (racer.IsPlayer())
+            {
+                PlayerRacer r = racer.gameObject.GetComponent<PlayerRacer>();
+                r.GetItemSlotImage(0).sprite = r.GetItemSlotImage(1).sprite;
+                r.GetItemSlotImage(1).sprite = emptyItemSlot;
+            }
+            
             racer.SetItem(racer.GetItemSlots()[1], 0);
             racer.SetItem(ItemType.Nothing, 1);
         }
         else
         {
-            racer.GetItemSlotImage(0).sprite = emptyItemSlot;
+            if (racer.IsPlayer())racer.GetComponent<PlayerRacer>().GetItemSlotImage(0).sprite = emptyItemSlot;
             racer.GetItemSlots()[0] = ItemType.Nothing;
         }
     }
@@ -95,34 +100,53 @@ public class ItemManager : MonoBehaviour
     {
         int itemIndex = 0;
         if (racer.GetItemSlots()[0] != ItemType.Nothing) itemIndex = 1;
-
-        Image itemSlot = racer.GetItemSlotImage(itemIndex);
-        Sprite[] sprites = GetAllSprites();
-
-        int spriteIndex = Random.Range(0, sprites.Length);
-
+        
         racer.SetItem(ItemType.GettingItem, itemIndex);
 
-        for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
+        if (racer.IsPlayer())
         {
-            itemSlot.sprite = sprites[spriteIndex];
-            spriteIndex++;
-            if (spriteIndex >= sprites.Length) spriteIndex = 0;
-            
-            if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
-            {
-                racer.GetItemSlotImage(1).sprite = emptyItemSlot;
-                racer.SetItem(ItemType.GettingItem, 0);
-                racer.SetItem(ItemType.Nothing, 1);
-                itemIndex = 0;
-                itemSlot = racer.GetItemSlotImage(itemIndex);
-                
-            }
-            yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
-        }
+            PlayerRacer r = racer.gameObject.GetComponent<PlayerRacer>();
+            Image itemSlot = r.GetItemSlotImage(itemIndex);
+            Sprite[] sprites = GetAllSprites();
 
+            int spriteIndex = Random.Range(0, sprites.Length);
+
+            for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
+            {
+                itemSlot.sprite = sprites[spriteIndex];
+                spriteIndex++;
+                if (spriteIndex >= sprites.Length) spriteIndex = 0;
+
+                if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
+                {
+                    r.GetItemSlotImage(1).sprite = emptyItemSlot;
+                    racer.SetItem(ItemType.GettingItem, 0);
+                    racer.SetItem(ItemType.Nothing, 1);
+                    itemIndex = 0;
+                    itemSlot = r.GetItemSlotImage(itemIndex);
+
+                }
+                yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
+            }
+
+            r.GetItemSlotImage(itemIndex).sprite = item.itemSlotSprite;
+        }
+        else
+        {
+            for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
+            {
+
+                if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
+                {
+                    racer.SetItem(ItemType.GettingItem, 0);
+                    racer.SetItem(ItemType.Nothing, 1);
+                    itemIndex = 0;
+                }
+                yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
+            }
+        }
+        
         racer.SetItem(item.itemType, itemIndex);
-        racer.GetItemSlotImage(itemIndex).sprite = item.itemSlotSprite;
         yield break;
     }
 

@@ -24,7 +24,7 @@ MonoBehaviour:
     maxDistance: 100
     minTime: 0
   - item: {fileID: 11400000, guid: 284f9af33c88a5e44b0299010a7923a4, type: 2}
-    weight: 3
+    weight: 141
     minDistance: 0
     maxDistance: 100
     minTime: 0
