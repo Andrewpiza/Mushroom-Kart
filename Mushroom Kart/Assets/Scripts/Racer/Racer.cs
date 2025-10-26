@@ -10,7 +10,7 @@ public class Racer : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float baseAcceleration = 1500;
-    [SerializeField] private float baseMaxSpeed = 15;
+    [SerializeField] private float baseMaxSpeed = 16;
 
     // Hit
     protected float hitTimer = 0;
@@ -63,6 +63,8 @@ public class Racer : MonoBehaviour
 
     public void Move(Vector2 move)
     {
+        if (hitTimer > 0) return; 
+
         rb.angularVelocity = 0;
         
         float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);

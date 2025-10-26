@@ -56,7 +56,7 @@ public class PlayerRacer : Racer
         }
 
         UpdateRacer();
-        if (hitTimer <= 0) Move(new Vector2(xMove, yMove));
+        Move(new Vector2(xMove, yMove));
     }
 
     public override void ChangeCoins(int n)
