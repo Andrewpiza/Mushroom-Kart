@@ -204,7 +204,7 @@ MonoBehaviour:
   baseMaxSpeed: 16
   boost: 0
   item: 
-  itemCooldownMax: 0.2
+  itemCooldownMax: 0.5
   amountOfRays: 11
   rayCastLength: 16
   rayAngle: 18

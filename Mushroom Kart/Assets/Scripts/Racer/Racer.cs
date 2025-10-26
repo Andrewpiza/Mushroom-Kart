@@ -76,7 +76,7 @@ public class Racer : MonoBehaviour
         float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);
         float acceleration = baseAcceleration + (amountOfCoins * 10);
 
-        if (isOffRoad)maxSpeed /= 2;
+        if (isOffRoad && boost < 3)maxSpeed /= 2;
 
         if (isDrifting)
         {
