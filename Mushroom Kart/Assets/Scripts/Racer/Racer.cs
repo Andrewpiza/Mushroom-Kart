@@ -37,9 +37,13 @@ public class Racer : MonoBehaviour
     private const float DRIFT_STRENGTH = 48;
 
     // Item
-    [SerializeField]protected ItemType[] item;
+    [SerializeField] protected ItemType[] item;
+
+    // Effects
+    protected List<Effects> effects;
 
     // Other
+    private bool isOffRoad;
     protected Rigidbody2D rb;
     protected Transform spriteTransform;
     private Vector2 respawnPoint;
@@ -70,6 +74,8 @@ public class Racer : MonoBehaviour
         float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);
         float acceleration = baseAcceleration + (amountOfCoins * 10);
 
+        if (isOffRoad)maxSpeed /= 2;
+
         if (isDrifting)
         {
             acceleration *= 1.4f;
@@ -93,6 +99,7 @@ public class Racer : MonoBehaviour
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
 
+        isOffRoad = false;
         LookFoward();
     }
     
@@ -206,7 +213,7 @@ public class Racer : MonoBehaviour
 
         if (nearby) return;
 
-        if (TileManager.Instance.IsOffRoadTile(tile.name) && !isJumping) Debug.Log("OFF ROAD");
+        if (TileManager.Instance.IsOffRoadTile(tile.name) && !isJumping) isOffRoad = true;
         else if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.25f, true);
         else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(6);

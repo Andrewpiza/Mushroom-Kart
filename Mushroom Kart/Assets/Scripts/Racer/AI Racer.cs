@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class AIRacer : Racer
 {
-    [SerializeField]private int amountOfRays = 10;
-    [SerializeField]private float rayCastLength = 1;
-    [SerializeField]private float rayAngle = 18;
+    [SerializeField]private int amountOfRays = 11;
+    [SerializeField]private float rayCastLength = 16;
+    [SerializeField] private float rayAngle = 18;
 
     // Update is called once per frame
     void Update()
     {
         ShootRays();
+        UpdateRacer();
     }
 
     private void ShootRays(){
