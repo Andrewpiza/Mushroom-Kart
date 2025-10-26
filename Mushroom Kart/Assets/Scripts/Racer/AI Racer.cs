@@ -14,17 +14,34 @@ public class AIRacer : Racer
     }
 
     private void ShootRays(){
-        Vector3 currentDir = transform.right;
+        Vector3 currentDir = new Vector3(0,0,0);
         Vector3 dir = transform.up;
-        for (int i = 0;i < amountOfRays;i ++){
-            RaycastHit2D raycast = Physics2D.Raycast(transform.position, dir, rayCastLength, LayerMask.GetMask("AI Wall"));
-            if (!raycast.collider)
-            {
-                currentDir += dir;
-            }
+        if (isOffRoad)
+        {
+            for (int i = 0; i < amountOfRays*2; i++)
+            {         
+                RaycastHit2D raycast = Physics2D.Raycast(transform.position, dir, rayCastLength*5, LayerMask.GetMask("AI Wall"));
+                if (raycast.collider)
+                {
+                    currentDir += dir;
+                }
 
-            dir = Quaternion.AngleAxis(-rayAngle,Vector3.forward) * dir;
+                dir = Quaternion.AngleAxis(-rayAngle, Vector3.forward) * dir;
+            }
         }
+        else
+        {
+            for (int i = 0;i < amountOfRays;i ++){
+                RaycastHit2D raycast = Physics2D.Raycast(transform.position, dir, rayCastLength, LayerMask.GetMask("AI Wall"));
+                if (!raycast.collider)
+                {
+                    currentDir += dir;
+                }
+
+                dir = Quaternion.AngleAxis(-rayAngle,Vector3.forward) * dir;
+            }
+        }
+        
 
         dir = currentDir.normalized;
         Move(dir);

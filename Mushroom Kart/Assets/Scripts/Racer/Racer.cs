@@ -43,7 +43,7 @@ public class Racer : MonoBehaviour
     protected List<Effects> effects;
 
     // Other
-    private bool isOffRoad;
+    protected bool isOffRoad;
     protected Rigidbody2D rb;
     protected Transform spriteTransform;
     private Vector2 respawnPoint;
@@ -99,7 +99,6 @@ public class Racer : MonoBehaviour
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
 
-        isOffRoad = false;
         LookFoward();
     }
     
@@ -196,6 +195,8 @@ public class Racer : MonoBehaviour
         Vector3Int pos = tilemap.WorldToCell(transform.position);
         TileBase tile = tilemap.GetTile(pos);
         bool nearby = false;
+
+        if (!tile || isJumping) isOffRoad = false;
 
         if (!tile)
         {
