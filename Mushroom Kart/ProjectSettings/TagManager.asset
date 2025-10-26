@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Map
   - Racer
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -28,11 +28,11 @@ public class PlayerRacer : Racer
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ItemManager.Instance.UseItem(this, item[0], ItemDirection.Backward);
+            UseItem(ItemDirection.Backward);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
+            UseItem(ItemDirection.Foward);
         }
 
         if (Input.GetKey(KeyCode.LeftShift))

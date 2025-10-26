@@ -51,15 +51,15 @@ public class AIRacer : Racer
     
     private void UseItem(){
         if (item[0] == ItemType.Banana || item[0] == ItemType.GreenShell){
-            RaycastHit2D raycastForward = Physics2D.Raycast(transform.position + (2*transform.right*transform.localScale.x), transform.right,rayCastLength,LayerMask.GetMask("Racer","Item"));
-            if (raycastForward.collider)ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
-            RaycastHit2D raycastBackward= Physics2D.Raycast(transform.position - (2f*transform.right*transform.localScale.x), -transform.right,rayCastLength,LayerMask.GetMask("Racer","Item"));
-            if (raycastBackward.collider)ItemManager.Instance.UseItem(this, item[0],ItemDirection.Backward);
+            RaycastHit2D raycastForward = Physics2D.Raycast(transform.position + (2*transform.right*transform.localScale.x), transform.right,7,LayerMask.GetMask("Racer","Item"));
+            if (raycastForward.collider) UseItem(ItemDirection.Foward);
+            RaycastHit2D raycastBackward= Physics2D.Raycast(transform.position - (2f*transform.right*transform.localScale.x), -transform.right,7,LayerMask.GetMask("Racer","Item"));
+            if (raycastBackward.collider)UseItem(ItemDirection.Backward);
             return;
         }
-        else if (Random.Range(0,2) == 0)ItemManager.Instance.UseItem(this, item[0],ItemDirection.Foward);
+        else if (Random.Range(0,2) == 0)UseItem(ItemDirection.Foward);
         else{
-            ItemManager.Instance.UseItem(this, item[0],ItemDirection.Backward);
+            UseItem(ItemDirection.Backward);
         }
     }
 

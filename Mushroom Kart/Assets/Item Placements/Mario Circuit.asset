@@ -18,13 +18,13 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 100
     minTime: 0
-  - item: {fileID: 11400000, guid: 38e56ab035a3dfa45be035d26ed0727f, type: 2}
-    weight: 1
+  - item: {fileID: 11400000, guid: 284f9af33c88a5e44b0299010a7923a4, type: 2}
+    weight: 2
     minDistance: 0
     maxDistance: 100
     minTime: 0
-  - item: {fileID: 11400000, guid: 284f9af33c88a5e44b0299010a7923a4, type: 2}
-    weight: 141
+  - item: {fileID: 11400000, guid: 38e56ab035a3dfa45be035d26ed0727f, type: 2}
+    weight: 1
     minDistance: 0
     maxDistance: 100
     minTime: 0

@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 public class Racer : MonoBehaviour
 {
@@ -38,6 +36,8 @@ public class Racer : MonoBehaviour
 
     // Item
     [SerializeField] protected ItemType[] item;
+    [SerializeField]private float itemCooldownMax = 0.2f;
+    private float itemCooldown;
 
     // Effects
     protected List<Effects> effects;
@@ -51,6 +51,7 @@ public class Racer : MonoBehaviour
 
     void Start()
     {
+        itemCooldown = itemCooldownMax;
         respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteTransform = transform.GetChild(0);
@@ -60,6 +61,7 @@ public class Racer : MonoBehaviour
     protected void UpdateRacer()
     {
         hitTimer -= Time.deltaTime;
+        itemCooldown += Time.deltaTime;
         
         if (isJumping) UpdateHeight();
         spriteTransform.localScale = (height + 1) * Vector2.one;
@@ -112,7 +114,6 @@ public class Racer : MonoBehaviour
 
         boost = 0;
     }
-
 
     public void UpdateHeight()
     {
@@ -222,6 +223,15 @@ public class Racer : MonoBehaviour
         {
             ItemManager.Instance.GiveItem(this);
             StartCoroutine(TileManager.Instance.RespawnItemBox(pos, tile));
+        }
+    }
+
+    public void UseItem(ItemDirection itemDirection)
+    {
+        if (itemCooldown >= itemCooldownMax)
+        {
+            itemCooldown = 0;
+            ItemManager.Instance.UseItem(this, item[0],itemDirection);
         }
     }
 

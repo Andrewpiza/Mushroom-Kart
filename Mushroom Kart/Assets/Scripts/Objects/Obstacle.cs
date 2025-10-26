@@ -18,6 +18,11 @@ public class Obstacle : Object
             timesHit++;
             HitRacer(c.gameObject);
         }
+        else if (c.tag == "Item")
+        {
+            timesHit++;
+            HitItem();
+        }
         if (c.tag == "Map")
         {
             OnTile(c.GetComponent<Tilemap>());
