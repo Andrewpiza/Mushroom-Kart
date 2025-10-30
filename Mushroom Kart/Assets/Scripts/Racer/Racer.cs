@@ -73,8 +73,8 @@ public class Racer : MonoBehaviour
 
         rb.angularVelocity = 0;
         
-        float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (amountOfCoins / 10);
-        float acceleration = baseAcceleration + (amountOfCoins * 10);
+        float maxSpeed = baseMaxSpeed + Mathf.Clamp(boost, 0, MAX_BOOST) + (Mathf.Clamp(amountOfCoins, 0, 10) / 10);
+        float acceleration = baseAcceleration + (Mathf.Clamp(amountOfCoins, 0, 10) * 10);
 
         if (isOffRoad && boost < 3)maxSpeed /= 2;
 
