@@ -25,7 +25,7 @@ public class Racer : MonoBehaviour
     protected bool isJumping;
     private float hVelocity;
     protected float height;
-    private const float MAX_HEIGHT = 1.2f;
+    private const float MAX_HEIGHT = 0.6f;
     private const float GRAVITY = 6.75f;
 
     // Drift
@@ -218,6 +218,11 @@ public class Racer : MonoBehaviour
         if (TileManager.Instance.IsOffRoadTile(tile.name) && !isJumping) isOffRoad = true;
         else if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.25f, true);
+        else if (TileManager.Instance.IsBigJumpTile(tile.name))
+        {
+            Jump(5f, true);
+            Boost(6);
+        } 
         else if (TileManager.Instance.IsSpeedBoostTile(tile.name)) Boost(6);
         else if (TileManager.Instance.IsItemBoxTile(tile.name))
         {

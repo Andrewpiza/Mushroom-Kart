@@ -16,6 +16,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Tile[] offRoadTiles;
     [SerializeField] private Tile[] offMapTiles;
     [SerializeField] private Tile[] jumpTiles;
+    [SerializeField] private Tile[] bigJumpTiles;
     [SerializeField] private Tile[] speedBostTiles;
     [SerializeField] private Tile[] coinTiles;
     [SerializeField] private Tile[] itemBoxTiles;
@@ -48,6 +49,15 @@ public class TileManager : MonoBehaviour
     public bool IsJumpTile(string tile)
     {
         foreach (Tile t in jumpTiles)
+        {
+            if (t.name == tile) return true;
+        }
+        return false;
+    }
+
+    public bool IsBigJumpTile(string tile)
+    {
+        foreach (Tile t in bigJumpTiles)
         {
             if (t.name == tile) return true;
         }
