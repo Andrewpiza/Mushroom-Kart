@@ -32,7 +32,7 @@ public class Racer : MonoBehaviour
     protected bool isDrifting;
     protected float driftAngle;
     protected float driftCharge;
-    private const float DRIFT_STRENGTH = 48;
+    private const float DRIFT_STRENGTH = 62;
 
     // Item
     [SerializeField] protected ItemType[] item;
@@ -45,8 +45,8 @@ public class Racer : MonoBehaviour
     // Placement
     public int placement;
     protected Node currentNode;
-    [SerializeField]protected int lapsDone;
-    [SerializeField]protected float distanceInTrack;
+    protected int lapsDone;
+    protected float distanceInTrack;
 
     // Other
     protected bool isOffRoad;
@@ -86,10 +86,10 @@ public class Racer : MonoBehaviour
             acceleration *= 1.4f;
 
             Vector2 driftMove = Quaternion.AngleAxis(DRIFT_STRENGTH * driftAngle, Vector3.forward) * transform.right;
-            move += driftMove;
+            move = ((move / 1.3f) + driftMove).normalized;
 
-            driftCharge += Time.deltaTime / 3.5f;
-            if (move != Vector2.zero && Vector2.Angle(move, driftMove) < 25) driftCharge += Time.deltaTime / 1.4f;
+            driftCharge += Time.deltaTime / 1.7f;
+            if (move != Vector2.zero && Vector2.Angle(move, driftMove) < 35) driftCharge += Time.deltaTime * 1.35f;
         }
 
         if (boost > 0)

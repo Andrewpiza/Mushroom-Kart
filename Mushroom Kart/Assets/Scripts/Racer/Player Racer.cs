@@ -4,11 +4,14 @@ using TMPro;
 public class PlayerRacer : Racer
 {
     private TextMeshProUGUI coinText;
+    private TextMeshProUGUI lapText;
     private Image[] itemSlotImages;
 
     void Awake()
     {
         coinText = GameObject.Find("Coin Text").GetComponent<TextMeshProUGUI>();
+
+        lapText = GameObject.Find("Lap Text").GetComponent<TextMeshProUGUI>();
 
         itemSlotImages = new Image[2];
         itemSlotImages[0] = GameObject.Find("Item Slot").GetComponent<Image>();
@@ -17,6 +20,9 @@ public class PlayerRacer : Racer
 
     void Update()
     {
+        lapText.text = lapsDone + 1 + "/3";
+        
+
         float xMove = Input.GetAxisRaw("Horizontal");
         float yMove = Input.GetAxisRaw("Vertical");
 
