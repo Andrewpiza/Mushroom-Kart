@@ -88,9 +88,9 @@ public class PlacementManager : MonoBehaviour
             for (int j = 0; j < placements.Length; j++)
             {
                 if (placements[j] == null) continue;
-                if (placements[j].GetDistanceInTrack() > minDistance)
+                if (placements[j].GetTotalDistanceOfTrack() > minDistance)
                 {
-                    minDistance = placements[j].GetDistanceInTrack();
+                    minDistance = placements[j].GetTotalDistanceOfTrack();
                     racerIndex = j;
                 }
             }

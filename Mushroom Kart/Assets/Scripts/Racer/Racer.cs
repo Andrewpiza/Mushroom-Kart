@@ -45,7 +45,7 @@ public class Racer : MonoBehaviour
     // Placement
     public int placement;
     protected Node currentNode;
-    protected int lap = 1;
+    [SerializeField]protected int lapsDone;
     [SerializeField]protected float distanceInTrack;
 
     // Other
@@ -264,7 +264,7 @@ public class Racer : MonoBehaviour
 
         if (distance > PlacementManager.instance.trackLength)
         {
-            lap++;
+            lapsDone++;
             distanceInTrack = 0;
         }
     }
@@ -272,6 +272,11 @@ public class Racer : MonoBehaviour
     public float GetDistanceInTrack()
     {
         return distanceInTrack;
+    }
+
+    public float GetTotalDistanceOfTrack()
+    {
+        return distanceInTrack + (PlacementManager.instance.trackLength * lapsDone);
     }
 
     public void SetNode(Node node)
