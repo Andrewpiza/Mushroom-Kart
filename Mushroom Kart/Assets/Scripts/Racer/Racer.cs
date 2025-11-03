@@ -239,7 +239,7 @@ public class Racer : MonoBehaviour
         if (itemCooldown >= itemCooldownMax)
         {
             itemCooldown = 0;
-            ItemManager.Instance.UseItem(this, item[0],itemDirection);
+            ItemManager.Instance.UseItem(this, item[0],itemDirection, rb.linearVelocity.magnitude);
         }
     }
 

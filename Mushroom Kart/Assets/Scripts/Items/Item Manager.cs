@@ -35,8 +35,9 @@ public class ItemManager : MonoBehaviour
         Instance = this;
     }
 
-    public void UseItem(Racer racer, ItemType item, ItemDirection dir)
+    public void UseItem(Racer racer, ItemType item, ItemDirection dir, float speed)
     {
+        if (speed < 5) speed = 5;
         if (item == ItemType.Nothing || item == ItemType.GettingItem) return;
         switch (item)
         {
@@ -44,17 +45,17 @@ public class ItemManager : MonoBehaviour
                 racer.Boost(12);
                 break;
             case ItemType.Banana:
-                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[0], -racer.transform.right * 75f);
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[0], -racer.transform.right * (speed*8));
                 else
                 {
-                    SpawnItem(racer, itemGameObjects[0], racer.transform.right * 600);
+                    SpawnItem(racer, itemGameObjects[0], racer.transform.right * (speed*40));
                 }
                 break;
             case ItemType.GreenShell:
-                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[1], -racer.transform.right * 350);
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[1], -racer.transform.right * (speed*25));
                 else
                 {
-                    SpawnItem(racer, itemGameObjects[1], racer.transform.right * 350);
+                    SpawnItem(racer, itemGameObjects[1], racer.transform.right * (speed*25));
                 }
                 break;
         }
