@@ -14,14 +14,23 @@ public class AIRacer : Racer
         if (item[0] != ItemType.Nothing && item[0] != ItemType.GettingItem) UseItem();
     }
 
+    private bool IsGoingBackward()
+    {
+        return Vector2.Angle(transform.right, currentNode.next.pos - currentNode.pos) > 90;
+    }
+
     private void ShootRays()
     {
         Vector3 currentDir = new Vector3(0, 0, 0);
         Vector3 dir = transform.up;
+
         if (isOffRoad)
         {
             dir = currentNode.pos - transform.position;
-            Move(dir.normalized);
+        }
+        else if (IsGoingBackward())
+        {
+            dir = currentNode.next.pos - currentNode.pos;
         }
         else
         {
@@ -35,10 +44,10 @@ public class AIRacer : Racer
 
                 dir = Quaternion.AngleAxis(-rayAngle, Vector3.forward) * dir;
             }
+            dir = currentDir;
         }
-
-        dir = currentDir.normalized;
-        Move(dir);
+        
+        Move(dir.normalized);
     }
     
     private void UseItem(){
