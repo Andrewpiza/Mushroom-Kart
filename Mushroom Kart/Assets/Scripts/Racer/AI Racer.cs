@@ -20,16 +20,8 @@ public class AIRacer : Racer
         Vector3 dir = transform.up;
         if (isOffRoad)
         {
-            for (int i = 0; i < amountOfRays * 2; i++)
-            {
-                RaycastHit2D raycast = Physics2D.Raycast(transform.position, dir, rayCastLength * 5, LayerMask.GetMask("AI Wall"));
-                if (raycast.collider)
-                {
-                    currentDir += dir;
-                }
-
-                dir = Quaternion.AngleAxis(-rayAngle, Vector3.forward) * dir;
-            }
+            dir = currentNode.pos - transform.position;
+            Move(dir.normalized);
         }
         else
         {

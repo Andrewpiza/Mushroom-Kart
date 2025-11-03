@@ -25,7 +25,14 @@ public class TileManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        objectTilemap = transform.GetChild(2).GetComponent<Tilemap>();
+        for (int i = 0;i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name == "Object Tilemap")
+            {
+                objectTilemap = transform.GetChild(i).GetComponent<Tilemap>();
+                break;
+            }
+        }
     }
 
     public bool IsOffRoadTile(string tile)

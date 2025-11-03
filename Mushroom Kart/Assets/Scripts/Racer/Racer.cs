@@ -42,17 +42,20 @@ public class Racer : MonoBehaviour
     // Effects
     protected List<Effects> effects;
 
+    // Placement
+    public int placement;
+    protected Node currentNode;
+    protected int lap = 1;
+    [SerializeField]protected float distanceInTrack;
+
     // Other
     protected bool isOffRoad;
     protected Rigidbody2D rb;
     protected Transform spriteTransform;
-    private Vector2 respawnPoint;
-
 
     void Start()
     {
         itemCooldown = itemCooldownMax;
-        respawnPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
         spriteTransform = transform.GetChild(0);
         item = new ItemType[2];
@@ -173,7 +176,7 @@ public class Racer : MonoBehaviour
         if (height <= -1)
         {
             height = 0;
-            transform.position = respawnPoint;
+            transform.position = currentNode.pos;
         }
         else if (height <= -0.5)
         {
@@ -253,5 +256,31 @@ public class Racer : MonoBehaviour
     public virtual bool IsPlayer()
     {
         return false;
+    }
+
+    public void SetDistanceInTrack(float distance)
+    {
+        distanceInTrack = distance;
+
+        if (distance > PlacementManager.instance.trackLength)
+        {
+            lap++;
+            distanceInTrack = 0;
+        }
+    }
+
+    public float GetDistanceInTrack()
+    {
+        return distanceInTrack;
+    }
+
+    public void SetNode(Node node)
+    {
+        currentNode = node;
+    }
+
+    public Node GetNode()
+    {
+        return currentNode;
     }
 }
