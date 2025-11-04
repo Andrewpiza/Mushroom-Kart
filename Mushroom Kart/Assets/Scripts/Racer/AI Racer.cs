@@ -6,9 +6,17 @@ public class AIRacer : Racer
     [SerializeField]private float rayCastLength = 16;
     [SerializeField] private float rayAngle = 18;
 
+    private bool goToNextNode;
+
+    void Awake()
+    {
+        isComputer = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (isOffRoad) goToNextNode = true;
         ShootRays();
         UpdateRacer();
         if (item[0] != ItemType.Nothing && item[0] != ItemType.GettingItem) UseItem();
@@ -24,9 +32,10 @@ public class AIRacer : Racer
         Vector3 currentDir = new Vector3(0, 0, 0);
         Vector3 dir = transform.up;
 
-        if (isOffRoad)
+        if (goToNextNode)
         {
-            dir = currentNode.pos - transform.position;
+            dir = currentNode.next.pos - transform.position;
+            if(dir.magnitude < 1)goToNextNode=false;
         }
         else if (IsGoingBackward())
         {
@@ -49,21 +58,22 @@ public class AIRacer : Racer
         
         Move(dir.normalized);
     }
-    
-    private void UseItem(){
-        if (item[0] == ItemType.Banana || item[0] == ItemType.GreenShell){
-            RaycastHit2D raycastForward = Physics2D.Raycast(transform.position + (2*transform.right*transform.localScale.x), transform.right,7,LayerMask.GetMask("Racer","Item"));
+
+    private void UseItem() {
+        if (item[0] == ItemType.Banana || item[0] == ItemType.GreenShell) {
+            RaycastHit2D raycastForward = Physics2D.Raycast(transform.position + (2 * transform.right * transform.localScale.x), transform.right, 7, LayerMask.GetMask("Racer", "Item"));
             if (raycastForward.collider) UseItem(ItemDirection.Foward);
-            RaycastHit2D raycastBackward= Physics2D.Raycast(transform.position - (2f*transform.right*transform.localScale.x), -transform.right,7,LayerMask.GetMask("Racer","Item"));
-            if (raycastBackward.collider)UseItem(ItemDirection.Backward);
+            RaycastHit2D raycastBackward = Physics2D.Raycast(transform.position - (2f * transform.right * transform.localScale.x), -transform.right, 7, LayerMask.GetMask("Racer", "Item"));
+            if (raycastBackward.collider) UseItem(ItemDirection.Backward);
             return;
         }
-        else if (Random.Range(0,2) == 0)UseItem(ItemDirection.Foward);
-        else{
+        else if (Random.Range(0, 2) == 0) UseItem(ItemDirection.Foward);
+        else {
             UseItem(ItemDirection.Backward);
         }
     }
 
+    /*
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -80,4 +90,5 @@ public class AIRacer : Racer
             dir = Quaternion.AngleAxis(-rayAngle, Vector3.forward) * dir;
         }
     }
+    */
 }

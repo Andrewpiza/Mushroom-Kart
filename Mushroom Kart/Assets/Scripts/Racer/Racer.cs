@@ -49,6 +49,7 @@ public class Racer : MonoBehaviour
     protected float distanceInTrack;
 
     // Other
+    protected bool isComputer; 
     protected bool isOffRoad;
     protected Rigidbody2D rb;
     protected Transform spriteTransform;
