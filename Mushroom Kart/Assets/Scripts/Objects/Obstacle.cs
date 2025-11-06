@@ -7,7 +7,7 @@ public class Obstacle : Object
     [SerializeField]private float hitTime = 1;
     [SerializeField] private float momentumLoss = 0.25f;
     [SerializeField] private float maxHits = 1;
-    private GameObject owner;
+    protected GameObject owner;
     private float ownerProtectTime = 0.6f;
     private float timesHit;
 
@@ -43,7 +43,7 @@ public class Obstacle : Object
         if (timesHit >= maxHits) DestroyObstacle();
     }
 
-    public void SetOwner(GameObject o)
+    public virtual void SetOwner(GameObject o)
     {
         owner = o;
     }

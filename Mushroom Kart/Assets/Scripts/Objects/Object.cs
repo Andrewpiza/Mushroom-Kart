@@ -11,11 +11,12 @@ public class Object : MonoBehaviour
     private const float GRAVITY = 6.75f;
 
     // Other
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     private Transform spriteTransform;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         spriteTransform = transform.GetChild(0);
     }
 

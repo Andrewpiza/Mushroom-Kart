@@ -28,3 +28,8 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 100
     minTime: 0
+  - item: {fileID: 11400000, guid: 27d5f2eebb5ff1f4a8faf020cacec302, type: 2}
+    weight: 214
+    minDistance: 0
+    maxDistance: 100
+    minTime: 0

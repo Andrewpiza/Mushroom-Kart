@@ -9,7 +9,8 @@ public enum ItemType
     GettingItem,
     Mushroom,
     Banana,
-    GreenShell
+    GreenShell,
+    RedShell
 }
 
 public enum ItemDirection
@@ -37,7 +38,7 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem(Racer racer, ItemType item, ItemDirection dir, float speed)
     {
-        if (speed < 5) speed = 5;
+        if (speed < 5) speed = 8;
         if (item == ItemType.Nothing || item == ItemType.GettingItem) return;
         switch (item)
         {
@@ -56,6 +57,13 @@ public class ItemManager : MonoBehaviour
                 else
                 {
                     SpawnItem(racer, itemGameObjects[1], racer.transform.right * (speed*25));
+                }
+                break;
+            case ItemType.RedShell:
+                if (dir == ItemDirection.Backward) SpawnItem(racer, itemGameObjects[2], -racer.transform.right * (speed*25));
+                else
+                {
+                    SpawnItem(racer, itemGameObjects[2], racer.transform.right * (speed*25));
                 }
                 break;
         }
