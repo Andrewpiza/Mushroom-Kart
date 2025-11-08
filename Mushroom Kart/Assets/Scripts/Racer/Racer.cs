@@ -53,18 +53,31 @@ public class Racer : MonoBehaviour
     protected bool isOffRoad;
     protected Rigidbody2D rb;
     protected Transform spriteTransform;
+    protected Collider2D col;
+    protected SpriteRenderer spriteRenderer;
 
     void Start()
     {
         itemCooldown = itemCooldownMax;
+        col = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         spriteTransform = transform.GetChild(0);
         item = new ItemType[2];
     }
 
     protected void UpdateRacer()
     {
-        hitTimer -= Time.deltaTime;
+        
+        if (hitTimer > 0)
+        {
+            hitTimer -= Time.deltaTime;
+            if (hitTimer <= 0)
+            {
+                col.enabled = true;
+                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1);
+            }
+        }
         itemCooldown += Time.deltaTime;
         
         if (isJumping) UpdateHeight();
@@ -115,6 +128,9 @@ public class Racer : MonoBehaviour
         rb.angularVelocity = 150;
 
         ChangeCoins(-2);
+
+        col.enabled = false;
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.3f);
 
         boost = 0;
     }
