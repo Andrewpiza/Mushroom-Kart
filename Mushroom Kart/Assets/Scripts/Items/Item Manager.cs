@@ -10,7 +10,8 @@ public enum ItemType
     Mushroom,
     Banana,
     GreenShell,
-    RedShell
+    RedShell,
+    Coin
 }
 
 public enum ItemDirection
@@ -42,6 +43,9 @@ public class ItemManager : MonoBehaviour
         if (item == ItemType.Nothing || item == ItemType.GettingItem) return;
         switch (item)
         {
+            case ItemType.Coin:
+                racer.ChangeCoins(2);
+                break;
             case ItemType.Mushroom:
                 racer.Boost(12);
                 break;

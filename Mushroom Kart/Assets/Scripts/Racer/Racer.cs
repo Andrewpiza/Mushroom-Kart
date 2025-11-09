@@ -17,7 +17,7 @@ public class Racer : MonoBehaviour
     protected int amountOfCoins;
 
     // Boost
-    [SerializeField]private float boost;
+    private float boost;
     private const float MAX_BOOST = 10f;
 
     // Jump
@@ -68,7 +68,6 @@ public class Racer : MonoBehaviour
 
     protected void UpdateRacer()
     {
-        
         if (hitTimer > 0)
         {
             hitTimer -= Time.deltaTime;
