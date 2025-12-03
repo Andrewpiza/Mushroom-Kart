@@ -23,7 +23,7 @@ public class PlayerRacer : Racer
 
     void Update()
     {
-        lapText.text = lapsDone + 1 + "/3";
+        lapText.text = lapsDone + 1 + "/" + PlacementManager.instance.maxLaps;
         placementText.text = placement + "";
         
 
@@ -32,6 +32,7 @@ public class PlayerRacer : Racer
 
         if (Input.GetKey(KeyCode.Space) && canTrick)
         {
+            SoundManager.Instance.PlaySound("Trick",0.7f);
             canTrick = false;
             Boost(1.8f);
         }
@@ -71,9 +72,7 @@ public class PlayerRacer : Racer
 
     public override void ChangeCoins(int n)
     {
-        amountOfCoins += n;
-        if (amountOfCoins > 15) amountOfCoins = 15;
-        else if (amountOfCoins < 0) amountOfCoins = 0;
+        base.ChangeCoins(n);
 
         coinText.text = amountOfCoins + "";
     }

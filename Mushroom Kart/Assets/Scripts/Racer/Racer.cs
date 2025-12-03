@@ -122,6 +122,7 @@ public class Racer : MonoBehaviour
     
     public void Hit(float hitTime,float momentumLoss)
     {
+        SoundManager.Instance.PlaySound("Hit",0.3f);
         hitTimer = hitTime;
         rb.linearVelocity = rb.linearVelocity * momentumLoss;
         rb.angularVelocity = 150;
@@ -164,6 +165,7 @@ public class Racer : MonoBehaviour
 
     public virtual void ChangeCoins(int n)
     {
+        if (n > 0)SoundManager.Instance.PlaySound("Coin",0.35f);
         amountOfCoins += n;
         if (amountOfCoins > 15) amountOfCoins = 15;
         else if (amountOfCoins < 0) amountOfCoins = 0;
@@ -171,6 +173,7 @@ public class Racer : MonoBehaviour
 
     public void Boost(float b)
     {
+        SoundManager.Instance.PlaySound("Boost",0.45f);
         boost += b;
         if (boost > 13) boost = 13; 
 
@@ -179,7 +182,13 @@ public class Racer : MonoBehaviour
 
     public void Jump(float h, bool trickable)
     {
+        
         if (isJumping) return;
+        if (h > 4)SoundManager.Instance.PlaySound("Big Jump",0.7f);
+        else
+        {
+            SoundManager.Instance.PlaySound("Jump",0.7f);
+        }
         canTrick = trickable;
         isJumping = true;
         hVelocity = h;
@@ -232,10 +241,10 @@ public class Racer : MonoBehaviour
             StartCoroutine(TileManager.Instance.RespawnCoin(pos, tile));
         }
 
-        if (nearby) return;
+        if (nearby || isJumping) return;
 
-        if (TileManager.Instance.IsOffRoadTile(tile.name) && !isJumping) isOffRoad = true;
-        else if (TileManager.Instance.IsOffMapTile(tile.name) && !isJumping) FallOff();
+        if (TileManager.Instance.IsOffRoadTile(tile.name)) isOffRoad = true;
+        else if (TileManager.Instance.IsOffMapTile(tile.name)) FallOff();
         else if (TileManager.Instance.IsJumpTile(tile.name)) Jump(2.25f, true);
         else if (TileManager.Instance.IsBigJumpTile(tile.name))
         {
@@ -282,6 +291,13 @@ public class Racer : MonoBehaviour
         {
             lapsDone++;
             distanceInTrack = 0;
+            if (IsPlayer()){
+                if (lapsDone >= PlacementManager.instance.maxLaps)SoundManager.Instance.PlaySound("Lap",0.4f);
+                else
+                {
+                    SoundManager.Instance.PlaySound("Lap",0.75f,1.5f);
+                }    
+            }
         }
     }
 

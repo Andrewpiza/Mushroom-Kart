@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c789edf406c7849972329f609f80ad, type: 3}
   m_Name: Red Shell
   m_EditorClassIdentifier: Assembly-CSharp::ItemObject
-  itemSlotSprite: {fileID: 21300000, guid: c30d6a6deaa8ab340a6ad31416d6c121, type: 3}
+  itemSlotSprite: {fileID: 21300000, guid: 6090c10d0db6d554190aed59bdb592ac, type: 3}
   itemType: 5

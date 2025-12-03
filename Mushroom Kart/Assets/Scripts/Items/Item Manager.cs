@@ -30,7 +30,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private GameObject[] itemGameObjects;
 
     private const float TIME_TO_GET_ITEM = 2;
-    private const float ITEMSLOT_CHANGE_TIME = 0.1f;
+    private const float ITEMSLOT_CHANGE_TIME = 0.828f/4;
     // Start is called before the first frame update
     void Awake()
     {
@@ -124,12 +124,22 @@ public class ItemManager : MonoBehaviour
 
             int spriteIndex = Random.Range(0, sprites.Length);
 
+            int playSound = 3;
+
             for (float i = 0; i < TIME_TO_GET_ITEM; i += ITEMSLOT_CHANGE_TIME)
             {
                 itemSlot.sprite = sprites[spriteIndex];
                 spriteIndex++;
                 if (spriteIndex >= sprites.Length) spriteIndex = 0;
 
+                if (playSound == 3){
+                    SoundManager.Instance.PlaySound("Getting Item",0.19f);
+                    playSound = 0;
+                }
+                else
+                {
+                    playSound++;
+                }
                 if (itemIndex == 1 && racer.GetItemSlots()[0] == ItemType.Nothing)
                 {
                     r.GetItemSlotImage(1).sprite = emptyItemSlot;
@@ -141,6 +151,8 @@ public class ItemManager : MonoBehaviour
                 }
                 yield return new WaitForSeconds(ITEMSLOT_CHANGE_TIME);
             }
+
+            SoundManager.Instance.PlaySound("Got Item",0.18f);
 
             r.GetItemSlotImage(itemIndex).sprite = item.itemSlotSprite;
         }

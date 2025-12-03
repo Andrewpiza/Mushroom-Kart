@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Mario Circuit
   m_EditorClassIdentifier: Assembly-CSharp::ItemPlacements
   items:
+  - item: {fileID: 11400000, guid: 2d2c1ab6f1f9d6e448d6cd1b5008ec55, type: 2}
+    weight: 8
+    minDistance: 0
+    maxDistance: 100
+    minTime: 0
   - item: {fileID: 11400000, guid: 6e012e1a8fe4aea4d83a485c9047efba, type: 2}
     weight: 6
     minDistance: 0

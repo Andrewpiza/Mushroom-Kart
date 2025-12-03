@@ -15,6 +15,8 @@ public class Node
 public class PlacementManager : MonoBehaviour
 {
     public static PlacementManager instance;
+
+    public int maxLaps;
     private Node firstNode;
     public GameObject[] points;
     public float trackLength;
