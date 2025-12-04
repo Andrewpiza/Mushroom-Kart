@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]private List<AudioSource> sounds;
 
+    private AudioSource music;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,12 +29,22 @@ public class SoundManager : MonoBehaviour
         AddSound("Mario Circuit",Resources.Load<AudioClip>("Audio/Mario Circuit"));
         AddSound("Mario Circuit Final",Resources.Load<AudioClip>("Audio/Mario Circuit Final"));
         sounds = new List<AudioSource>();
-        PlaySound("Mario Circuit",0.3f);
+        
+        music = gameObject.AddComponent<AudioSource>();
+        music.loop = true;
+        PlayMusic("Mario Circuit",0.5f);
     }
 
     private void AddSound(string soundName, AudioClip audio)
     {
         sfxDictionary.Add(soundName, audio);
+    }
+
+    public void PlayMusic(string musicName, float volume = 1)
+    {
+        music.Stop();
+        music.volume = volume;
+        music.PlayOneShot(sfxDictionary[musicName]);
     }
 
     public void PlaySound(string soundName, float volume = 1, float pitch = 1)

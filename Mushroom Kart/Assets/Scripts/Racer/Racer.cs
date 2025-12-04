@@ -292,10 +292,11 @@ public class Racer : MonoBehaviour
             lapsDone++;
             distanceInTrack = 0;
             if (IsPlayer()){
-                if (lapsDone >= PlacementManager.instance.maxLaps)SoundManager.Instance.PlaySound("Lap",0.4f);
+                if (lapsDone+1 < PlacementManager.instance.maxLaps)SoundManager.Instance.PlaySound("Lap",0.4f);
                 else
                 {
                     SoundManager.Instance.PlaySound("Lap",0.75f,1.5f);
+                    SoundManager.Instance.PlayMusic("Mario Circuit Final",0.5f);
                 }    
             }
         }
